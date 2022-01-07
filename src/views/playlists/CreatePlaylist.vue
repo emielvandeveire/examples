@@ -1,17 +1,55 @@
 <template>
   <div>
     <form @submit.prevent="handleSubmit">
-      <h4>Create a New Playlist</h4>
+      <h4>Create a New Example</h4>
       <input type="text" required placeholder="Example Title" v-model="title" />
-      <textarea
-        required
-        placeholder="Description..."
-        v-model="description"
-      ></textarea>
-      <textarea
-        placeholder="Second Description... (optional)"
-        v-model="description2"
-      ></textarea>
+
+      <div class="extra-info">
+        <div class="checkbox">
+          <p>Add description</p>
+          <input
+            v-model="wantDescription"
+            id="wantDescription"
+            type="checkbox"
+          />
+          <label class="addOrRemove" for="wantDescription">
+            <i v-if="wantDescription" class="material-icons">
+              remove
+            </i>
+            <i v-if="!wantDescription" class="material-icons">
+              add
+            </i>
+          </label>
+        </div>
+        <textarea
+          v-if="wantDescription"
+          placeholder="Description..."
+          v-model="description"
+        ></textarea>
+
+        <div class="checkbox">
+          <p>Add Second description</p>
+          <input
+            v-model="wantDescription2"
+            id="wantDescription2"
+            type="checkbox"
+          />
+          <label class="addOrRemove" for="wantDescription2">
+            <i v-if="wantDescription2" class="material-icons">
+              remove
+            </i>
+            <i v-if="!wantDescription2" class="material-icons">
+              add
+            </i>
+          </label>
+        </div>
+        <textarea
+          v-if="wantDescription2"
+          placeholder="Second Description..."
+          v-model="description2"
+        ></textarea>
+      </div>
+
       <!-- upload playlist image -->
       <label for="file"
         ><span class="material-icons icon">&#xe43e;</span>Upload Playlist Cover
@@ -69,6 +107,8 @@ export default {
         }
       }
     };
+    const wantDescription = ref(false);
+    const wantDescription2 = ref(false);
 
     // allowed file types
     const types = ["image/png", "image/jpeg"];
@@ -93,6 +133,8 @@ export default {
       fileError,
       handleChange,
       isPending,
+      wantDescription,
+      wantDescription2,
     };
   },
 };
@@ -113,5 +155,23 @@ label {
 }
 button {
   margin-top: 20px;
+}
+input[type="checkbox"] {
+  display: none;
+}
+label.addOrRemove {
+  background: #4f515a;
+  height: 10px;
+  width: 10px;
+  margin: 0;
+  padding: 5px;
+  border-radius: 50px;
+}
+label.addOrRemove i {
+  color: white;
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin: 0;
 }
 </style>

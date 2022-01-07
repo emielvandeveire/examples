@@ -1,11 +1,11 @@
 <template>
   <div class="add-song">
-    <button v-if="!showForm" @click="showForm = true">Add Songs</button>
+    <button v-if="!showForm" @click="showForm = true">Add Comment</button>
     <form v-if="showForm" @submit.prevent="handleSubmit">
-      <h4>Add a New Song</h4>
+      <h4>Comment</h4>
       <input type="text" placeholder="Song title" required v-model="title">
       <input type="text" placeholder="Artist" required v-model="artist">
-      <button>Add</button>
+      <button>Comment</button>
     </form>
   </div>
 </template>

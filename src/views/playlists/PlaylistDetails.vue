@@ -9,7 +9,7 @@
       </div>
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
-      <p class="description">{{ playlist.description }}</p>
+      <p v-if="playlist.description" class="description">{{ playlist.description }}</p>
       <p v-if="playlist.description2" class="description">{{ playlist.description2 }}</p>
       <button v-if="ownership" @click="handleDelete">Delete Playlist</button>
     </div>
