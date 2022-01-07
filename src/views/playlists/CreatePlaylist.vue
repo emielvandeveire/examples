@@ -48,15 +48,41 @@
           placeholder="Second Description..."
           v-model="description2"
         ></textarea>
+
+        <div class="checkbox">
+          <p>Add links</p>
+          <input v-model="wantLinks" id="wantLinks" type="checkbox" />
+          <label class="addOrRemove" for="wantLinks">
+            <i v-if="wantLinks" class="material-icons">
+              remove
+            </i>
+            <i v-if="!wantLinks" class="material-icons">
+              add
+            </i>
+          </label>
+        </div>
+        <div class="add-link">
+          <form v-if="wantLinks" @submit.prevent="handleLinkSubmit">
+            <h4>Add Link</h4>
+            <input type="text" placeholder="Song title" v-model="linkTitle" />
+            <input type="text" placeholder="Artist" v-model="link" />
+            <button>Add Link</button>
+          </form>
+          <div v-for="link in links" :key="link.id">
+            <h4>{{ link.linkTitle }}</h4>
+            <a :href="link.link">{{ link.link }}</a>
+          </div>
+        </div>
       </div>
 
       <!-- upload playlist image -->
-      <label for="file"
+      <input id="image" type="file" @change="handleImageChange" />
+      <div class="error">{{ fileError }}</div>
+
+      <label for="image"
         ><span class="material-icons icon">&#xe43e;</span>Upload Playlist Cover
         Image</label
       >
-      <input id="file" type="file" @change="handleChange" />
-      <div class="error">{{ fileError }}</div>
 
       <button v-if="!isPending">Create</button>
       <button v-else disabled>Saving...</button>
@@ -79,9 +105,14 @@ export default {
     const { user } = getUser();
     const router = useRouter();
 
+    const wantIt = ref(false);
+
     const title = ref("");
     const description = ref("");
     const description2 = ref("");
+    const linkTitle = ref("");
+    const link = ref("");
+    const links = ref([]);
     const file = ref(null);
     const fileError = ref(null);
     const isPending = ref(false);
@@ -94,6 +125,7 @@ export default {
           title: title.value,
           description: description.value,
           description2: description2.value,
+          links: links.value,
           userId: user.value.uid,
           userName: user.value.displayName,
           coverUrl: url.value,
@@ -107,16 +139,29 @@ export default {
         }
       }
     };
+    const handleLinkSubmit = () => {
+      const newLink = {
+        linkTitle: linkTitle.value,
+        link: link.value,
+        id: Math.floor(Math.random() * 1000000),
+      };
+      linkTitle.value = "";
+      link.value = "";
+      links.value = [...links.value, newLink];
+      console.log(newLink);
+      console.log(links.value);
+    };
     const wantDescription = ref(false);
     const wantDescription2 = ref(false);
+    const wantLinks = ref(false);
 
-    // allowed file types
-    const types = ["image/png", "image/jpeg"];
-    const handleChange = (e) => {
+    // allowed file imageTypes
+    const imageTypes = ["image/png", "image/jpeg", "video/mp4"];
+    const handleImageChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
 
-      if (selected && types.includes(selected.type)) {
+      if (selected && imageTypes.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
       } else {
@@ -129,12 +174,18 @@ export default {
       title,
       description,
       description2,
+      links,
+      linkTitle,
+      link,
       handleSubmit,
       fileError,
-      handleChange,
+      handleImageChange,
+      handleLinkSubmit,
       isPending,
       wantDescription,
       wantDescription2,
+      wantLinks,
+      wantIt,
     };
   },
 };

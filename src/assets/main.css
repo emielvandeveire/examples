@@ -105,3 +105,7 @@ form label:hover span.icon {
   font-size: 14px;
   margin: 16px 0;
 }
+
+.link-link {
+  text-align: start;
+}
