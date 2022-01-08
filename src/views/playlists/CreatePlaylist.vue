@@ -5,21 +5,24 @@
       <input type="text" required placeholder="Example Title" v-model="title" />
 
       <div class="extra-info">
-        <div class="checkbox">
-          <p>Add description</p>
-          <input
-            v-model="wantDescription"
-            id="wantDescription"
-            type="checkbox"
-          />
-          <label class="addOrRemove" for="wantDescription">
-            <i v-if="wantDescription" class="material-icons">
-              remove
-            </i>
-            <i v-if="!wantDescription" class="material-icons">
-              add
-            </i>
-          </label>
+        <p>Add description</p>
+        <div
+          class="icon-button disabled"
+          v-if="!wantDescription"
+          @click="wantDescription = true"
+        >
+          <i class="material-icons">
+            add
+          </i>
+        </div>
+        <div
+          class="icon-button enabled"
+          v-if="wantDescription"
+          @click="wantDescription = false"
+        >
+          <i class="material-icons">
+            add
+          </i>
         </div>
         <textarea
           v-if="wantDescription"
@@ -27,21 +30,24 @@
           v-model="description"
         ></textarea>
 
-        <div class="checkbox">
-          <p>Add Second description</p>
-          <input
-            v-model="wantDescription2"
-            id="wantDescription2"
-            type="checkbox"
-          />
-          <label class="addOrRemove" for="wantDescription2">
-            <i v-if="wantDescription2" class="material-icons">
-              remove
-            </i>
-            <i v-if="!wantDescription2" class="material-icons">
-              add
-            </i>
-          </label>
+        <p>Add Second description</p>
+        <div
+          class="icon-button disabled"
+          v-if="!wantDescription2"
+          @click="wantDescription2 = true"
+        >
+          <i class="material-icons">
+            add
+          </i>
+        </div>
+        <div
+          class="icon-button enabled"
+          v-if="wantDescription2"
+          @click="wantDescription2 = false"
+        >
+          <i class="material-icons">
+            add
+          </i>
         </div>
         <textarea
           v-if="wantDescription2"
@@ -49,17 +55,25 @@
           v-model="description2"
         ></textarea>
 
-        <div class="checkbox">
-          <p>Add links</p>
-          <input v-model="wantLinks" id="wantLinks" type="checkbox" />
-          <label class="addOrRemove" for="wantLinks">
-            <i v-if="wantLinks" class="material-icons">
-              remove
-            </i>
-            <i v-if="!wantLinks" class="material-icons">
-              add
-            </i>
-          </label>
+
+        <p>Add links</p>
+        <div
+          class="icon-button disabled"
+          v-if="!wantLinks"
+          @click="wantLinks = true"
+        >
+          <i class="material-icons">
+            add
+          </i>
+        </div>
+        <div
+          class="icon-button enabled"
+          v-if="wantLinks"
+          @click="wantLinks = false"
+        >
+          <i class="material-icons">
+            add
+          </i>
         </div>
         <div class="add-link">
           <form v-if="wantLinks" @submit.prevent="handleLinkSubmit">
@@ -84,6 +98,13 @@
         Image</label
       >
 
+      <input id="video" type="file" @change="handleVideoChange" />
+      <div class="error">{{ fileError }}</div>
+
+      <label for="video"
+        ><span class="material-icons icon">&#xe02c;</span>Upload Video</label
+      >
+
       <button v-if="!isPending">Create</button>
       <button v-else disabled>Saving...</button>
     </form>
@@ -97,10 +118,18 @@ import useCollection from "@/composables/useCollection";
 import getUser from "@/composables/getUser";
 import { timestamp } from "@/firebase/config";
 import { useRouter } from "vue-router";
+import HideOrShow from "@/components/HideOrShow";
 
 export default {
   setup() {
-    const { filePath, url, uploadImage } = useStorage();
+    const {
+      imagefilePath,
+      videofilePath,
+      imageurl,
+      videourl,
+      uploadImage,
+      uploadVideo,
+    } = useStorage();
     const { error, addDoc } = useCollection("playlists");
     const { user } = getUser();
     const router = useRouter();
@@ -113,14 +142,16 @@ export default {
     const linkTitle = ref("");
     const link = ref("");
     const links = ref([]);
-    const file = ref(null);
+    const imageFile = ref(null);
+    const videoFile = ref(null);
     const fileError = ref(null);
     const isPending = ref(false);
 
     const handleSubmit = async () => {
-      if (file.value) {
+      if (imageFile.value && videoFile.value) {
         isPending.value = true;
-        await uploadImage(file.value);
+        await uploadImage(imageFile.value);
+        await uploadVideo(videoFile.value);
         const res = await addDoc({
           title: title.value,
           description: description.value,
@@ -128,8 +159,10 @@ export default {
           links: links.value,
           userId: user.value.uid,
           userName: user.value.displayName,
-          coverUrl: url.value,
-          filePath: filePath.value, // so we can delete it later
+          coverUrl: imageurl.value,
+          videoUrl: videourl.value,
+          coverFilePath: imagefilePath.value,
+          videoFilePath: videofilePath.value, // so we can delete it later
           songs: [],
           createdAt: timestamp(),
         });
@@ -162,11 +195,25 @@ export default {
       console.log(selected);
 
       if (selected && imageTypes.includes(selected.type)) {
-        file.value = selected;
+        imageFile.value = selected;
         fileError.value = null;
       } else {
-        file.value = null;
+        imageFile.value = null;
         fileError.value = "Please select an image file (png or jpg)";
+      }
+    };
+
+    const videoTypes = ["video/mp4", "video/mov"];
+    const handleVideoChange = (e) => {
+      let selected = e.target.files[0];
+      console.log(selected);
+
+      if (selected && videoTypes.includes(selected.type)) {
+        videoFile.value = selected;
+        fileError.value = null;
+      } else {
+        videoFile.value = null;
+        fileError.value = "Please select an image file (mp4 or mov)";
       }
     };
 
@@ -180,6 +227,7 @@ export default {
       handleSubmit,
       fileError,
       handleImageChange,
+      handleVideoChange,
       handleLinkSubmit,
       isPending,
       wantDescription,
@@ -188,10 +236,17 @@ export default {
       wantIt,
     };
   },
+  components: {
+    HideOrShow,
+  },
 };
 </script>
 
 <style>
+div {
+  margin: 0;
+  padding: 0;
+}
 form {
   background: white;
 }
@@ -207,22 +262,31 @@ label {
 button {
   margin-top: 20px;
 }
-input[type="checkbox"] {
-  display: none;
-}
-label.addOrRemove {
-  background: #4f515a;
-  height: 10px;
-  width: 10px;
-  margin: 0;
-  padding: 5px;
-  border-radius: 50px;
-}
-label.addOrRemove i {
-  color: white;
+
+.icon-button i {
   font-size: 16px;
   height: 16px;
   width: 16px;
   margin: 0;
+  color: white;
+}
+
+.icon-button {
+  background: #4f515a;
+  height: 16px;
+  width: 16px;
+  margin: 0;
+  border-radius: 50px;
+}
+
+.disabled {
+  background: green;
+}
+
+.enabled {
+  background: red;
+}
+.enabled i {
+  transform: rotate(45deg);
 }
 </style>

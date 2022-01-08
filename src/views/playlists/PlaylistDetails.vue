@@ -1,11 +1,10 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="playlist-details">
-    
     <!-- playlist information -->
     <div class="playlist-info">
-      <div class="cover">
-        <img :src="playlist.coverUrl" />
+      <div class="video">
+        <video controls :src="playlist.videoUrl"></video>
       </div>
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
@@ -19,12 +18,13 @@
       </div>
       <div v-for="link in playlist.links" :key="link.id">
         <h4>{{ link.linkTitle }}</h4>
-        <a :href="link.link"><p class="pina">{{ link.link }}</p></a>
+        <a :href="link.link"
+          ><p class="pina">{{ link.link }}</p></a
+        >
       </div>
 
       <button v-if="ownership" @click="handleDelete">Delete Playlist</button>
     </div>
-
 
     <!-- song list -->
     <div class="song-list">
@@ -137,7 +137,8 @@ export default {
   border-bottom: 1px dashed var(--secondary);
   margin-bottom: 20px;
 }
-div h4, .link-link {
+div h4,
+.link-link {
   text-align: start;
 }
 div a p {
