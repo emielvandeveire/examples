@@ -10,7 +10,7 @@
           <p>created by {{ playlist.userName }}</p>
         </div>
         <div class="song-number">
-          <p>{{ playlist.songs.length }} songs</p>
+          <p>{{ playlist.songs.length }} comments</p>
         </div>
       </div>
     </router-link>

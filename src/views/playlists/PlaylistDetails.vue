@@ -8,14 +8,16 @@
       </div>
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
+
       <div v-if="playlist.description">
-        <h4>Description</h4>
+        <h3>Description</h3>
         <p class="description">{{ playlist.description }}</p>
       </div>
       <div v-if="playlist.description2">
-        <h4>Second Description</h4>
+        <h3>Second Description</h3>
         <p class="description">{{ playlist.description2 }}</p>
       </div>
+      <h3>Links</h3>
       <div v-for="link in playlist.links" :key="link.id">
         <h4>{{ link.linkTitle }}</h4>
         <a class="link-container" :href="link.link"
@@ -25,11 +27,18 @@
           <p>{{ link.link }}</p></a
         >
       </div>
+      <h3>Tags</h3>
       <div class="tag-container">
         <div v-for="tag in playlist.tags" :key="tag.id">
           <div class="tag">{{ tag.tagTitle }}</div>
         </div>
       </div>
+      <h3>Preparation</h3>
+      <ul class="preparation-container">
+        <li v-for="preparation in playlist.preparations" :key="preparation.id">
+          <p class="preparation">{{ preparation.preparationTitle }}</p>
+        </li>
+      </ul>
 
       <button class="warning" v-if="ownership" @click="handleDelete">
         Delete Playlist
@@ -130,9 +139,7 @@ export default {
   font-size: 28px;
   margin-top: 20px;
 }
-.playlist-info p {
-  margin-bottom: 20px;
-}
+
 .username {
   color: #999;
 }
@@ -147,9 +154,16 @@ export default {
   border-bottom: 1px dashed var(--secondary);
   margin-bottom: 20px;
 }
+div h3,
 div h4,
 .link-link {
   text-align: start;
+}
+div h3 {
+  margin-top: 15px;
+}
+div h4 {
+  margin-top: 5px;
 }
 div a p {
   text-align: start;
@@ -161,5 +175,9 @@ div a p {
 }
 .link-icon {
   color: #999;
+}
+li {
+  text-align: start;
+  margin: 0;
 }
 </style>

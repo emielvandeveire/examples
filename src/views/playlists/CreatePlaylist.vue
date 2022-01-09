@@ -5,7 +5,7 @@
       <input type="text" required placeholder="Example Title" v-model="title" />
 
       <div class="extra-info">
-        <p>Add description</p>
+        <p>Description</p>
         <div
           class="icon-button disabled"
           v-if="!wantDescription"
@@ -30,7 +30,7 @@
           v-model="description"
         ></textarea>
 
-        <p>Add Second description</p>
+        <p>Second Description</p>
         <div
           class="icon-button disabled"
           v-if="!wantDescription2"
@@ -55,7 +55,7 @@
           v-model="description2"
         ></textarea>
 
-        <p>Add links</p>
+        <p>Links</p>
         <div
           class="icon-button disabled"
           v-if="!wantLinks"
@@ -77,8 +77,8 @@
         <div class="add-link">
           <form v-if="wantLinks" @submit.prevent="handleLinkSubmit">
             <h4>Add Link</h4>
-            <input type="text" placeholder="Song title" v-model="linkTitle" />
-            <input type="text" placeholder="Artist" v-model="link" />
+            <input type="text" placeholder="Link Title" v-model="linkTitle" />
+            <input type="text" placeholder="Link URL" v-model="link" />
             <button>Add Link</button>
           </form>
           <div v-for="link in links" :key="link.id">
@@ -88,7 +88,7 @@
         </div>
 
         <!-- Tags -->
-        <p>Add Tags</p>
+        <p>Tags</p>
         <div
           class="icon-button disabled"
           v-if="!wantTags"
@@ -110,7 +110,7 @@
         <div class="add-tag">
           <form v-if="wantTags" @submit.prevent="handleTagSubmit">
             <h4>Add Tag</h4>
-            <input type="text" placeholder="Song title" v-model="tagTitle" />
+            <input type="text" placeholder="Tag" v-model="tagTitle" />
             <button>Add tag</button>
           </form>
           <div class="tag-container">
@@ -118,6 +118,39 @@
               <div class="tag">{{ tag.tagTitle }}</div>
             </div>
           </div>
+        </div>
+
+        <!-- Materials -->
+        <p>Preparations</p>
+        <div
+          class="icon-button disabled"
+          v-if="!wantPreparations"
+          @click="wantPreparations = true"
+        >
+          <i class="material-icons">
+            add
+          </i>
+        </div>
+        <div
+          class="icon-button enabled"
+          v-if="wantPreparations"
+          @click="wantPreparations = false"
+        >
+          <i class="material-icons">
+            add
+          </i>
+        </div>
+        <div class="add-tag">
+          <form v-if="wantPreparations" @submit.prevent="handlePreparationSubmit">
+            <h4>Add Preparation</h4>
+            <input type="text" placeholder="Preparation" v-model="preparationTitle" />
+            <button>Add Preparation</button>
+          </form>
+          <ul class="preparation-container">
+            <li v-for="preparation in preparations" :key="preparation.id">
+              <p class="preparation">{{ preparation.preparationTitle }}</p>
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -176,6 +209,8 @@ export default {
     const links = ref([]);
     const tags = ref([]);
     const tagTitle = ref("");
+    const preparations = ref([])
+    const preparationTitle = ref("")
     const imageFile = ref(null);
     const videoFile = ref(null);
     const fileError = ref(null);
@@ -192,6 +227,7 @@ export default {
           description2: description2.value,
           links: links.value,
           tags: tags.value,
+          preparations: preparations.value,
           userId: user.value.uid,
           userName: user.value.displayName,
           coverUrl: imageurl.value,
@@ -229,13 +265,25 @@ export default {
       console.log(newTag);
       console.log(tags.value);
     };
+    const handlePreparationSubmit = () => {
+      const newPreparation = {
+        preparationTitle: preparationTitle.value,
+        id: Math.floor(Math.random() * 1000000),
+      };
+      preparationTitle.value = "";
+      preparations.value = [...preparations.value, newPreparation];
+      console.log(newPreparation);
+      console.log(preparations.value);
+    };
     const wantDescription = ref(false);
     const wantDescription2 = ref(false);
     const wantLinks = ref(false);
     const wantTags = ref(false);
+    const wantPreparations = ref(false)
+
 
     // allowed file imageTypes
-    const imageTypes = ["image/png", "image/jpeg", "video/mp4"];
+    const imageTypes = ["image/png", "image/jpeg", "image/heic"];
     const handleImageChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
@@ -249,7 +297,7 @@ export default {
       }
     };
 
-    const videoTypes = ["video/mp4", "video/mov"];
+    const videoTypes = ["video/mp4", "video/mov", "video/MOV"];
     const handleVideoChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
@@ -273,17 +321,21 @@ export default {
       links,
       tagTitle,
       tags,
+      preparations,
+      preparationTitle,
       handleSubmit,
       fileError,
       handleImageChange,
       handleVideoChange,
       handleLinkSubmit,
       handleTagSubmit,
+      handlePreparationSubmit,
       isPending,
       wantDescription,
       wantDescription2,
       wantLinks,
       wantTags,
+      wantPreparations,
       wantIt,
     };
   },
@@ -319,6 +371,7 @@ button {
   height: 16px;
   width: 16px;
   margin: 0;
+  padding: 0;
   color: white;
 }
 
@@ -326,8 +379,14 @@ button {
   background: #4f515a;
   height: 16px;
   width: 16px;
-  margin: 0;
+  margin: 0 0 5px 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
   border-radius: 50px;
+}
+.icon-button:hover {
+  cursor: pointer;
 }
 
 .disabled {
