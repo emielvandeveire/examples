@@ -47,7 +47,16 @@ const useStorage = () => {
     }
   };
 
-  return { uploadImage, uploadVideo, deleteImage, imageurl, videourl, imagefilePath, videofilePath, error };
+  return {
+    uploadImage,
+    uploadVideo,
+    deleteImage,
+    imageurl,
+    videourl,
+    imagefilePath,
+    videofilePath,
+    error,
+  };
 };
 
 export default useStorage;

@@ -4,7 +4,7 @@
     <!-- playlist information -->
     <div class="playlist-info">
       <div class="video">
-        <video controls :src="playlist.videoUrl"></video>
+        <video width="600" controls :src="playlist.videoUrl"></video>
       </div>
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
@@ -18,12 +18,22 @@
       </div>
       <div v-for="link in playlist.links" :key="link.id">
         <h4>{{ link.linkTitle }}</h4>
-        <a :href="link.link"
-          ><p class="pina">{{ link.link }}</p></a
+        <a class="link-container" :href="link.link"
+          ><div class="material-icons link-icon icon">
+            &#xe157;
+          </div>
+          <p>{{ link.link }}</p></a
         >
       </div>
+      <div class="tag-container">
+        <div v-for="tag in playlist.tags" :key="tag.id">
+          <div class="tag">{{ tag.tagTitle }}</div>
+        </div>
+      </div>
 
-      <button v-if="ownership" @click="handleDelete">Delete Playlist</button>
+      <button class="warning" v-if="ownership" @click="handleDelete">
+        Delete Playlist
+      </button>
     </div>
 
     <!-- song list -->
@@ -145,5 +155,11 @@ div a p {
   text-align: start;
   color: #999;
 }
-
+.link-container {
+  display: flex;
+  gap: 5px;
+}
+.link-icon {
+  color: #999;
+}
 </style>

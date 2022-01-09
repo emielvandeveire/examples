@@ -8,16 +8,16 @@
 </template>
 
 <script>
-import ListView from '../components/ListView.vue'
-import getCollection from '../composables/getCollection'
+import ListView from "../components/ListView.vue";
+import getCollection from "../composables/getCollection";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: { ListView },
   setup() {
-    const { error, documents } = getCollection('playlists')
+    const { error, documents } = getCollection("playlists");
 
-    return { error, documents }
-  }
-}
+    return { error, documents };
+  },
+};
 </script>

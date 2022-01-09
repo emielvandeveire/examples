@@ -45,6 +45,14 @@ button:disabled {
   background: var(--secondary);
   cursor: not-allowed;
 }
+button.warning:hover {
+  background: var(--warning);
+  color: white;
+}
+button.warning {
+  color: var(--warning);
+  border: 2px solid var(--warning);
+}
 
 /* forms */
 form {
@@ -108,4 +116,19 @@ form label:hover span.icon {
 
 .link-link {
   text-align: start;
+}
+div.tag {
+  padding: 2px 20px;
+  margin: 5px;
+  background: var(--secondary);
+  color: black;
+  border-radius: 50px;
+  text-align: start;
+}
+.tag-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

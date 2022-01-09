@@ -55,7 +55,6 @@
           v-model="description2"
         ></textarea>
 
-
         <p>Add links</p>
         <div
           class="icon-button disabled"
@@ -85,6 +84,39 @@
           <div v-for="link in links" :key="link.id">
             <h4>{{ link.linkTitle }}</h4>
             <a :href="link.link">{{ link.link }}</a>
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <p>Add Tags</p>
+        <div
+          class="icon-button disabled"
+          v-if="!wantTags"
+          @click="wantTags = true"
+        >
+          <i class="material-icons">
+            add
+          </i>
+        </div>
+        <div
+          class="icon-button enabled"
+          v-if="wantTags"
+          @click="wantTags = false"
+        >
+          <i class="material-icons">
+            add
+          </i>
+        </div>
+        <div class="add-tag">
+          <form v-if="wantTags" @submit.prevent="handleTagSubmit">
+            <h4>Add Tag</h4>
+            <input type="text" placeholder="Song title" v-model="tagTitle" />
+            <button>Add tag</button>
+          </form>
+          <div class="tag-container">
+            <div v-for="tag in tags" :key="tag.id">
+              <div class="tag">{{ tag.tagTitle }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -142,6 +174,8 @@ export default {
     const linkTitle = ref("");
     const link = ref("");
     const links = ref([]);
+    const tags = ref([]);
+    const tagTitle = ref("");
     const imageFile = ref(null);
     const videoFile = ref(null);
     const fileError = ref(null);
@@ -157,6 +191,7 @@ export default {
           description: description.value,
           description2: description2.value,
           links: links.value,
+          tags: tags.value,
           userId: user.value.uid,
           userName: user.value.displayName,
           coverUrl: imageurl.value,
@@ -184,9 +219,20 @@ export default {
       console.log(newLink);
       console.log(links.value);
     };
+    const handleTagSubmit = () => {
+      const newTag = {
+        tagTitle: tagTitle.value,
+        id: Math.floor(Math.random() * 1000000),
+      };
+      tagTitle.value = "";
+      tags.value = [...tags.value, newTag];
+      console.log(newTag);
+      console.log(tags.value);
+    };
     const wantDescription = ref(false);
     const wantDescription2 = ref(false);
     const wantLinks = ref(false);
+    const wantTags = ref(false);
 
     // allowed file imageTypes
     const imageTypes = ["image/png", "image/jpeg", "video/mp4"];
@@ -224,15 +270,20 @@ export default {
       links,
       linkTitle,
       link,
+      links,
+      tagTitle,
+      tags,
       handleSubmit,
       fileError,
       handleImageChange,
       handleVideoChange,
       handleLinkSubmit,
+      handleTagSubmit,
       isPending,
       wantDescription,
       wantDescription2,
       wantLinks,
+      wantTags,
       wantIt,
     };
   },
