@@ -12,7 +12,6 @@ npm run serve
 
 ### Compiles and minifies for production
 ```
-this is a test 
 npm run build
 ```
 
