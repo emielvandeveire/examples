@@ -48,7 +48,7 @@
     <!-- song list -->
     <div class="song-list">
       <div v-if="!playlist.songs.length">
-        No songs have been added to this playlist yet.
+        No comments have been yet.
       </div>
       <div v-for="song in playlist.songs" :key="song.id" class="single-song">
         <div class="details">
