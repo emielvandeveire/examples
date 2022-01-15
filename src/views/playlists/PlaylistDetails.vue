@@ -17,7 +17,7 @@
         <h3>Second Description</h3>
         <p class="description">{{ playlist.description2 }}</p>
       </div>
-      <h3>Links</h3>
+      <h3 v-if="playlist.links.length">Links</h3>
       <div v-for="link in playlist.links" :key="link.id">
         <h4>{{ link.linkTitle }}</h4>
         <a class="link-container" :href="link.link"
@@ -27,18 +27,23 @@
           <p>{{ link.link }}</p></a
         >
       </div>
-      <h3>Tags</h3>
+      <h3 v-if="playlist.tags.length">Tags</h3>
       <div class="tag-container">
         <div v-for="tag in playlist.tags" :key="tag.id">
           <div class="tag">{{ tag.tagTitle }}</div>
         </div>
       </div>
-      <h3>Preparation</h3>
-      <ul class="preparation-container">
-        <li v-for="preparation in playlist.preparations" :key="preparation.id">
-          <p class="preparation">{{ preparation.preparationTitle }}</p>
-        </li>
-      </ul>
+      <div v-if="playlist.preparations.length" class="preparation-container-div">
+        <h3>What you will learn</h3>
+        <ul class="preparation-container">
+          <li
+            v-for="preparation in playlist.preparations"
+            :key="preparation.id"
+          >
+            <p class="preparation">{{ preparation.preparationTitle }}</p>
+          </li>
+        </ul>
+      </div>
 
       <button class="warning" v-if="ownership" @click="handleDelete">
         Delete Playlist
@@ -48,7 +53,7 @@
     <!-- song list -->
     <div class="song-list">
       <div v-if="!playlist.songs.length">
-        No comments have been yet.
+        No comments have been added yet.
       </div>
       <div v-for="song in playlist.songs" :key="song.id" class="single-song">
         <div class="details">
