@@ -137,3 +137,7 @@ div.tag {
 ul {
   padding-left: 20px;
 }
+
+video {
+  border-radius: 10px;
+}
