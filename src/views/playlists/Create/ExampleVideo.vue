@@ -2,28 +2,43 @@
   <div>
     <form @submit.prevent="handleSubmit">
       <h4>Create a New Example</h4>
+
+      <!-- Title -->
       <input type="text" required placeholder="Example Title" v-model="title" />
+
+      <!-- Video -->
+      <input
+        accept=".mov, .mp4, .MOV"
+        id="video"
+        type="file"
+        @change="handleVideoChange"
+      />
+      <div class="error">{{ fileError }}</div>
+
+      <label for="video"
+        ><span class="material-icons icon">&#xe02c;</span>Upload Video</label
+      >
+
+      <!-- Image -->
+      <input
+        accept=".heic, .png, .HEIC, .jpeg, .jpg"
+        id="image"
+        type="file"
+        @change="handleImageChange"
+      />
+      <div class="error">{{ fileError }}</div>
+
+      <label for="image"
+        ><span class="material-icons icon">&#xe43e;</span>Upload Playlist Cover
+        Image</label
+      >
 
       <div class="extra-info">
         <p>Description</p>
-        <div
-          class="icon-button disabled"
-          v-if="!wantDescription"
-          @click="wantDescription = true"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
-        <div
-          class="icon-button enabled"
-          v-if="wantDescription"
-          @click="wantDescription = false"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
+        <HideOrShow
+          @showTrue="wantDescription = true"
+          @showFalse="wantDescription = false"
+        />
         <textarea
           v-if="wantDescription"
           placeholder="Description..."
@@ -31,24 +46,10 @@
         ></textarea>
 
         <p>Second Description</p>
-        <div
-          class="icon-button disabled"
-          v-if="!wantDescription2"
-          @click="wantDescription2 = true"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
-        <div
-          class="icon-button enabled"
-          v-if="wantDescription2"
-          @click="wantDescription2 = false"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
+        <HideOrShow
+          @showTrue="wantDescription2 = true"
+          @showFalse="wantDescription2 = false"
+        />
         <textarea
           v-if="wantDescription2"
           placeholder="Second Description..."
@@ -56,24 +57,10 @@
         ></textarea>
 
         <p>Links</p>
-        <div
-          class="icon-button disabled"
-          v-if="!wantLinks"
-          @click="wantLinks = true"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
-        <div
-          class="icon-button enabled"
-          v-if="wantLinks"
-          @click="wantLinks = false"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
+        <HideOrShow
+          @showTrue="wantLinks = true"
+          @showFalse="wantLinks = false"
+        />
         <div class="add-link">
           <form v-if="wantLinks" @submit.prevent="handleLinkSubmit">
             <h4>Add Link</h4>
@@ -87,26 +74,31 @@
           </div>
         </div>
 
+        <p>Codes</p>
+        <HideOrShow
+          @showTrue="wantCodes = true"
+          @showFalse="wantCodes = false"
+        />
+        <div class="add-code">
+          <form v-if="wantCodes" @submit.prevent="handleCodeSubmit">
+            <h4>Add Code</h4>
+            <input
+              type="text"
+              placeholder="Programming Language"
+              v-model="codeLanguage"
+            />
+            <textarea class="code" placeholder="Code" v-model="code" />
+            <button>Add Code</button>
+          </form>
+          <div v-for="code in codes" :key="code.id">
+            <h4 class="codeLanguage">{{ code.codeLanguage }}</h4>
+            <textarea readonly class="code" v-model="code.code"></textarea>
+          </div>
+        </div>
+
         <!-- Tags -->
         <p>Tags</p>
-        <div
-          class="icon-button disabled"
-          v-if="!wantTags"
-          @click="wantTags = true"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
-        <div
-          class="icon-button enabled"
-          v-if="wantTags"
-          @click="wantTags = false"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
+        <HideOrShow @showTrue="wantTags = true" @showFalse="wantTags = false" />
         <div class="add-tag">
           <form v-if="wantTags" @submit.prevent="handleTagSubmit">
             <h4>Add Tag</h4>
@@ -122,28 +114,21 @@
 
         <!-- Materials -->
         <p>Preparations</p>
-        <div
-          class="icon-button disabled"
-          v-if="!wantPreparations"
-          @click="wantPreparations = true"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
-        <div
-          class="icon-button enabled"
-          v-if="wantPreparations"
-          @click="wantPreparations = false"
-        >
-          <i class="material-icons">
-            add
-          </i>
-        </div>
+        <HideOrShow
+          @showTrue="wantPreparations = true"
+          @showFalse="wantPreparations = false"
+        />
         <div class="add-tag">
-          <form v-if="wantPreparations" @submit.prevent="handlePreparationSubmit">
+          <form
+            v-if="wantPreparations"
+            @submit.prevent="handlePreparationSubmit"
+          >
             <h4>Add Preparation</h4>
-            <input type="text" placeholder="Preparation" v-model="preparationTitle" />
+            <input
+              type="text"
+              placeholder="Preparation"
+              v-model="preparationTitle"
+            />
             <button>Add Preparation</button>
           </form>
           <ul class="preparation-container">
@@ -153,23 +138,6 @@
           </ul>
         </div>
       </div>
-
-      <!-- upload playlist image -->
-      <input id="image" type="file" @change="handleImageChange" />
-      <div class="error">{{ fileError }}</div>
-
-      <label for="image"
-        ><span class="material-icons icon">&#xe43e;</span>Upload Playlist Cover
-        Image</label
-      >
-
-      <input id="video" type="file" @change="handleVideoChange" />
-      <div class="error">{{ fileError }}</div>
-
-      <label for="video"
-        ><span class="material-icons icon">&#xe02c;</span>Upload Video</label
-      >
-
       <button v-if="!isPending">Create</button>
       <button v-else disabled>Saving...</button>
     </form>
@@ -207,10 +175,13 @@ export default {
     const linkTitle = ref("");
     const link = ref("");
     const links = ref([]);
+    const codeLanguage = ref("");
+    const code = ref("");
+    const codes = ref([]);
     const tags = ref([]);
     const tagTitle = ref("");
-    const preparations = ref([])
-    const preparationTitle = ref("")
+    const preparations = ref([]);
+    const preparationTitle = ref("");
     const imageFile = ref(null);
     const videoFile = ref(null);
     const fileError = ref(null);
@@ -226,6 +197,7 @@ export default {
           description: description.value,
           description2: description2.value,
           links: links.value,
+          codes: codes.value,
           tags: tags.value,
           preparations: preparations.value,
           userId: user.value.uid,
@@ -255,6 +227,18 @@ export default {
       console.log(newLink);
       console.log(links.value);
     };
+    const handleCodeSubmit = () => {
+      const newCode = {
+        codeLanguage: codeLanguage.value,
+        code: code.value,
+        id: Math.floor(Math.random() * 1000000),
+      };
+      codeLanguage.value = "";
+      code.value = "";
+      codes.value = [...codes.value, newCode];
+      console.log(newCode);
+      console.log(codes.value);
+    };
     const handleTagSubmit = () => {
       const newTag = {
         tagTitle: tagTitle.value,
@@ -279,11 +263,11 @@ export default {
     const wantDescription2 = ref(false);
     const wantLinks = ref(false);
     const wantTags = ref(false);
-    const wantPreparations = ref(false)
-
+    const wantPreparations = ref(false);
+    const wantCodes = ref(false);
 
     // allowed file imageTypes
-    const imageTypes = ["image/png", "image/jpeg", "image/heic"];
+    const imageTypes = ["image/png", "image/jpeg", "image/HEIC"];
     const handleImageChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
@@ -292,7 +276,7 @@ export default {
         imageFile.value = selected;
         fileError.value = null;
       } else {
-        imageFile.value = null;
+        imageFile.value = selected;
         fileError.value = "Please select an image file (png or jpg)";
       }
     };
@@ -306,7 +290,7 @@ export default {
         videoFile.value = selected;
         fileError.value = null;
       } else {
-        videoFile.value = null;
+        videoFile.value = selected;
         fileError.value = "Please select an image file (mp4 or mov)";
       }
     };
@@ -319,6 +303,9 @@ export default {
       linkTitle,
       link,
       links,
+      codeLanguage,
+      code,
+      codes,
       tagTitle,
       tags,
       preparations,
@@ -328,12 +315,14 @@ export default {
       handleImageChange,
       handleVideoChange,
       handleLinkSubmit,
+      handleCodeSubmit,
       handleTagSubmit,
       handlePreparationSubmit,
       isPending,
       wantDescription,
       wantDescription2,
       wantLinks,
+      wantCodes,
       wantTags,
       wantPreparations,
       wantIt,
@@ -359,44 +348,25 @@ input[type="file"] {
 }
 label {
   font-size: 12px;
-  display: block;
-  margin-top: 30px;
 }
 button {
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
-.icon-button i {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
+.extra-info {
+  margin: 20px 0;
+}
+
+.code {
   margin: 0;
-  padding: 0;
-  color: white;
+  padding: 10px;
+  overflow-x: scroll;
+  background-color: #ebebeb;
+  border-radius: 10px;
+  height: max-content;
 }
-
-.icon-button {
-  background: #4f515a;
-  height: 16px;
-  width: 16px;
-  margin: 0 0 5px 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  border-radius: 50px;
-}
-.icon-button:hover {
-  cursor: pointer;
-}
-
-.disabled {
-  background: green;
-}
-
-.enabled {
-  background: red;
-}
-.enabled i {
-  transform: rotate(45deg);
+.codeLanguage {
+  margin: 10px 0 0 0;
+  font-weight: 500;
 }
 </style>

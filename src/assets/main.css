@@ -68,7 +68,6 @@ form {
 input,
 textarea {
   border: 0;
-  border-bottom: 1px solid var(--secondary);
   padding: 10px;
   outline: none;
   display: block;
@@ -76,6 +75,13 @@ textarea {
   box-sizing: border-box;
   margin: 20px auto;
   resize: vertical;
+}
+textarea {
+  background-color: #ebebeb;
+  border-radius: 10px;
+}
+input {
+  border-left: 1px solid var(--secondary)
 }
 input[type="file"] {
   display: none;
