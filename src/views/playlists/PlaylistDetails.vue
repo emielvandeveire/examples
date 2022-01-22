@@ -1,11 +1,29 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="playlist-details">
+    <div>
+      <VideoPlayer :playlist="playlist" />
+      <!-- song list -->
+      <div class="song-list">
+        <div v-if="!playlist.songs.length">
+          No comments have been added yet.
+        </div>
+        <div v-for="song in playlist.songs" :key="song.id" class="single-song">
+          <div class="details">
+            <h3>{{ song.title }}</h3>
+            <p>{{ song.artist }}</p>
+          </div>
+          <button v-if="ownership" @click="handleClick(song.id)">delete</button>
+        </div>
+        <AddSong :playlist="playlist" />
+      </div>
+    </div>
+
     <!-- playlist information -->
     <div class="playlist-info">
-      <div class="video">
+      <!-- <div class="video">
         <video width="600" controls :src="playlist.videoUrl"></video>
-      </div>
+      </div> -->
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
 
@@ -17,7 +35,7 @@
         <h3>Second Description</h3>
         <p class="description">{{ playlist.description2 }}</p>
       </div>
-      <h3>Links</h3>
+      <h3 v-if="playlist.links.length">Links</h3>
       <div v-for="link in playlist.links" :key="link.id">
         <h4>{{ link.linkTitle }}</h4>
         <a class="link-container" :href="link.link"
@@ -27,37 +45,30 @@
           <p>{{ link.link }}</p></a
         >
       </div>
-      <h3>Tags</h3>
+      <h3 v-if="playlist.tags.length">Tags</h3>
       <div class="tag-container">
         <div v-for="tag in playlist.tags" :key="tag.id">
           <div class="tag">{{ tag.tagTitle }}</div>
         </div>
       </div>
-      <h3>Preparation</h3>
-      <ul class="preparation-container">
-        <li v-for="preparation in playlist.preparations" :key="preparation.id">
-          <p class="preparation">{{ preparation.preparationTitle }}</p>
-        </li>
-      </ul>
+      <div
+        v-if="playlist.preparations.length"
+        class="preparation-container-div"
+      >
+        <h3>What you will learn</h3>
+        <ul class="preparation-container">
+          <li
+            v-for="preparation in playlist.preparations"
+            :key="preparation.id"
+          >
+            <p class="preparation">{{ preparation.preparationTitle }}</p>
+          </li>
+        </ul>
+      </div>
 
       <button class="warning" v-if="ownership" @click="handleDelete">
         Delete Playlist
       </button>
-    </div>
-
-    <!-- song list -->
-    <div class="song-list">
-      <div v-if="!playlist.songs.length">
-        No songs have been added to this playlist yet.
-      </div>
-      <div v-for="song in playlist.songs" :key="song.id" class="single-song">
-        <div class="details">
-          <h3>{{ song.title }}</h3>
-          <p>{{ song.artist }}</p>
-        </div>
-        <button v-if="ownership" @click="handleClick(song.id)">delete</button>
-      </div>
-      <AddSong :playlist="playlist" />
     </div>
   </div>
 </template>
@@ -70,6 +81,7 @@
 //   - HINT: use the filter method
 
 import AddSong from "@/components/AddSong.vue";
+import VideoPlayer from "@/components/VideoPlayer.vue";
 import useStorage from "@/composables/useStorage";
 import useDocument from "@/composables/useDocument";
 import getDocument from "@/composables/getDocument";
@@ -79,7 +91,7 @@ import { useRouter } from "vue-router";
 
 export default {
   props: ["id"],
-  components: { AddSong },
+  components: { AddSong, VideoPlayer },
   setup(props) {
     const { error, document: playlist } = getDocument("playlists", props.id);
     const { user } = getUser();

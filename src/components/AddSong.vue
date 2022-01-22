@@ -3,8 +3,8 @@
     <button v-if="!showForm" @click="showForm = true">Add Comment</button>
     <form v-if="showForm" @submit.prevent="handleSubmit">
       <h4>Comment</h4>
-      <input type="text" placeholder="Song title" required v-model="title" />
-      <input type="text" placeholder="Artist" required v-model="artist" />
+      <input type="text" placeholder="Title" required v-model="title" />
+      <input type="text" placeholder="Comment" required v-model="artist" />
       <button>Comment</button>
     </form>
   </div>

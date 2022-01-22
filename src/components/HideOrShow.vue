@@ -1,33 +1,16 @@
 <template>
   <div class="checkbox">
-    <p>Add description</p>
-    <button v-if="!show" @click="show = true">
+    <div class="icon-button disabled" v-if="!show" @click="show = true, $emit('showTrue')">
       <i class="material-icons">
-        add
+        expand_more
       </i>
-    </button>
-    <button v-if="show" @click="show = false">
+    </div>
+    <div class="icon-button enabled" v-if="show" @click="show = false, $emit('showFalse')">
       <i class="material-icons">
-        remove
+        expand_less
       </i>
-    </button>
+    </div>
   </div>
-  <!-- <div class="checkbox">
-          <p>Add description</p>
-          <input
-            v-model="wantDescription"
-            id="wantDescription"
-            type="checkbox"
-          />
-          <label class="addOrRemove" for="wantDescription">
-            <i v-if="wantDescription" class="material-icons">
-              remove
-            </i>
-            <i v-if="!wantDescription" class="material-icons">
-              add
-            </i>
-          </label>
-        </div> -->
 </template>
 
 <script>
@@ -36,11 +19,7 @@ export default {
   props: ["wantIt"],
   setup(props) {
     const show = ref(false);
-    const handleClick = () => {
-      props.wantIt.value = true;
-      show.value = true;
-    };
-    return { show, handleClick };
+    return { show };
   },
 };
 </script>
@@ -50,5 +29,35 @@ button {
   width: 15px;
   height: 15px;
   padding: 0;
+}
+.icon-button i {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.icon-button {
+  background: #4f515a;
+  height: 16px;
+  width: 16px;
+  margin: 0 0 5px 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+}
+.icon-button:hover {
+  cursor: pointer;
+}
+
+.disabled {
+  background: green;
+}
+
+.enabled {
+  background: red;
 }
 </style>

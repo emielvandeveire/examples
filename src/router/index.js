@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/auth/Login.vue";
 import Signup from "../views/auth/Signup.vue";
-import CreatePlaylist from "../views/playlists/CreatePlaylist.vue";
+import CreatePlaylist from "../views/playlists/Create/CreatePlaylist.vue";
+import ExampleVideo from "../views/playlists/Create/ExampleVideo.vue";
+import ExamplePost from "../views/playlists/Create/ExamplePost.vue";
 import PlaylistDetails from "../views/playlists/PlaylistDetails.vue";
 import UserPlaylists from "../views/playlists/UserPlaylists.vue";
 
@@ -52,6 +54,18 @@ const routes = [
     path: "/playlists/user",
     name: "UserPlaylists",
     component: UserPlaylists,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/playlists/create/video",
+    name: "ExampleVideo",
+    component: ExampleVideo,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/playlists/create/post",
+    name: "ExamplePost",
+    component: ExamplePost,
     beforeEnter: requireAuth,
   },
 ];

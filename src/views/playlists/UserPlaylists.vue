@@ -1,11 +1,11 @@
 <template>
   <div class="user-playlists">
-    <h2>My Playlists</h2>
+    <h2>My Examples</h2>
     <div v-if="playlists">
       <ListView :playlists="playlists" />
     </div>
     <router-link :to="{ name: 'CreatePlaylist' }" class="btn"
-      >Create a New Playlist</router-link
+      >Create a New Example</router-link
     >
   </div>
 </template>

@@ -10,7 +10,12 @@
           <p>created by {{ playlist.userName }}</p>
         </div>
         <div class="song-number">
-          <p>{{ playlist.songs.length }} comments</p>
+          <div class="songs-length-container" v-if="playlist.songs.length == 1">
+            <p>{{ playlist.songs.length }} comment</p>
+          </div>
+          <div class="songs-length-container" v-else>
+            <p>{{ playlist.songs.length }} comments</p>
+          </div>
         </div>
       </div>
     </router-link>
@@ -54,5 +59,10 @@ img {
 }
 .song-number {
   margin-left: auto;
+}
+.songs-length-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
