@@ -74,12 +74,6 @@
 </template>
 
 <script>
-// challenge
-//   - attach a click handler to the delete (song) button called handleClick
-//   - inside the function, use the updateDoc function to delete that song
-//   - you'll need to pass the song id into the handleClick function
-//   - HINT: use the filter method
-
 import AddSong from "@/components/AddSong.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
 import useStorage from "@/composables/useStorage";

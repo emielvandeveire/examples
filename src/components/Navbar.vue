@@ -24,11 +24,6 @@
 </template>
 
 <script>
-// challenge
-//   - only show the logout button if we are logged in
-//   - only show the signup and login links if we are not logged in
-//   - use the getUser composable to help
-
 import getUser from "../composables/getUser";
 import useLogout from "../composables/useLogout";
 import { useRouter } from "vue-router";
