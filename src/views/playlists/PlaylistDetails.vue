@@ -26,7 +26,7 @@
       </div> -->
       <h2>{{ playlist.title }}</h2>
       <router-link :to="{ name: 'UserDetails', params: { userId: playlist.userId } }" class="username"
-        >Created by {{ playlist.userName }}</router-link
+        >Created by <b>{{ playlist.userName }}</b></router-link
       >
 
       <div v-if="playlist.description">

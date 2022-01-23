@@ -29,7 +29,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 h2 {
   padding-bottom: 10px;
   margin-bottom: 30px;
