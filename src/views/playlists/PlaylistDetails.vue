@@ -1,7 +1,7 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="playlist-details">
-    <div>
+    <div class="example">
       <VideoPlayer :playlist="playlist" />
       <!-- song list -->
       <div class="song-list">
@@ -25,7 +25,9 @@
         <video width="600" controls :src="playlist.videoUrl"></video>
       </div> -->
       <h2>{{ playlist.title }}</h2>
-      <p class="username">Created by {{ playlist.userName }}</p>
+      <router-link :to="{ name: 'UserDetails', params: { userId: playlist.userId } }" class="username"
+        >Created by {{ playlist.userName }}</router-link
+      >
 
       <div v-if="playlist.description">
         <h3>Description</h3>
@@ -38,12 +40,19 @@
       <h3 v-if="playlist.links.length">Links</h3>
       <div v-for="link in playlist.links" :key="link.id">
         <h4>{{ link.linkTitle }}</h4>
+        <span
+          v-if="ownership"
+          @click="handleLinkDelete(link.id)"
+          class="material-icons warning"
+        >
+          cancel
+        </span>
         <a class="link-container" :href="link.link"
           ><div class="material-icons link-icon icon">
             &#xe157;
           </div>
-          <p>{{ link.link }}</p></a
-        >
+          <p>{{ link.link }}</p>
+        </a>
       </div>
       <h3 v-if="playlist.tags.length">Tags</h3>
       <div class="tag-container">
@@ -109,8 +118,19 @@ export default {
       const songs = playlist.value.songs.filter((song) => song.id != id);
       await updateDoc({ songs });
     };
+    const handleLinkDelete = async (id) => {
+      const links = playlist.value.links.filter((link) => link.id != id);
+      await updateDoc({ links });
+    };
 
-    return { error, playlist, ownership, handleDelete, handleClick };
+    return {
+      error,
+      playlist,
+      ownership,
+      handleDelete,
+      handleClick,
+      handleLinkDelete,
+    };
   },
 };
 </script>
@@ -119,7 +139,7 @@ export default {
 .playlist-details {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 80px;
+  gap: 0px;
 }
 .cover {
   overflow: hidden;
@@ -143,7 +163,6 @@ export default {
 .playlist-info h2 {
   text-transform: capitalize;
   font-size: 28px;
-  margin-top: 20px;
 }
 
 .username {
@@ -185,5 +204,17 @@ div a p {
 li {
   text-align: start;
   margin: 0;
+}
+.playlist-info,
+.song-list {
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px rgba(50, 50, 50, 0.05);
+  border: 1px solid var(--secondary);
+  background: white;
+  padding: 25px;
+  height: max-content;
+}
+.example {
+  padding-right: 25px;
 }
 </style>

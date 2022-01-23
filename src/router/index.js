@@ -6,6 +6,7 @@ import CreatePlaylist from "../views/playlists/Create/CreatePlaylist.vue";
 import ExampleVideo from "../views/playlists/Create/ExampleVideo.vue";
 import ExamplePost from "../views/playlists/Create/ExamplePost.vue";
 import PlaylistDetails from "../views/playlists/PlaylistDetails.vue";
+import UserDetails from "../views/playlists/UserDetails.vue";
 import UserPlaylists from "../views/playlists/UserPlaylists.vue";
 
 // route guard
@@ -66,6 +67,13 @@ const routes = [
     path: "/playlists/create/post",
     name: "ExamplePost",
     component: ExamplePost,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/users/:userId",
+    name: "UserDetails",
+    component: UserDetails,
+    props: true,
     beforeEnter: requireAuth,
   },
 ];

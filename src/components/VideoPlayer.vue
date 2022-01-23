@@ -10,4 +10,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+video {
+  border-radius: 8px;
+}
+</style>
