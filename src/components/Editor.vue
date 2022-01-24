@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <button
       class="fa fa-bold"
       @click.prevent="
@@ -46,8 +46,245 @@
           .run()
       "
     />
-    <editor-content id="editor" class="content" :editor="editor" />
+    <editor-content class="content" :editor="editor" />
+  </div> -->
+  <div class="grid-container" v-if="editor">
+    <button
+      class="fa fa-bold"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleBold()
+          .run()
+      "
+    />
+
+    <button
+      class="fa fa-italic"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleItalic()
+          .run()
+      "
+    />
+
+    <button
+      class="fa fa-strikethrough"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleStrike()
+          .run()
+      "
+    />
+
+    <button
+      class="fa fa-code"
+      @click.prevent="
+        editor
+          .chain()
+          .focus()
+          .toggleCode()
+          .run()
+      "
+    />
+
+    <button
+      class="fa fa-file-code"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleCodeBlock()
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('codeBlock') }"
+    />
+
+    <button
+      class="fa fa-remove-format"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .unsetAllMarks()
+          .run()
+      "
+    />
+
+    <!-- <button
+      class="fa fa-window-close"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .clearNodes()
+          .run()
+      "
+    /> -->
+
+    <button
+      class="fa fa-paragraph"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .setParagraph()
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('paragraph') }"
+    />
+
+    <button
+      class="fa fa-list-ul"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleBulletList()
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('bulletList') }"
+    />
+
+    <button
+      class="fa fa-list-ol"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleOrderedList()
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('orderedList') }"
+    />
+
+    <button
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleHeading({ level: 1 })
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+    >H1</button>
+
+    <button
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleHeading({ level: 2 })
+          .run()
+      "
+    >H2</button>
+
+    <button
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleHeading({ level: 3 })
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+    >H3</button>
+
+    <button
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleHeading({ level: 4 })
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
+    >H4</button>
+
+    <button
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleHeading({ level: 5 })
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
+    >H5</button>
+
+    <button
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleHeading({ level: 6 })
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
+    >H6</button>
+
+    <button
+      class="fa fa-quote-right"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .toggleBlockquote()
+          .run()
+      "
+      :class="{ 'is-active': editor.isActive('blockquote') }"
+    />
+
+    <button
+      class="fa fa-horizontal-rule"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .setHorizontalRule()
+          .run()
+      "
+    />
+
+    <button
+      class="fa fa-page-break"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .setHardBreak()
+          .run()
+      "
+    />
+
+    <!-- <button
+      class="fa fa-undo"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .undo()
+          .run()
+      "
+    />
+
+    <button
+      class="fa fa-redo"
+      @click="
+        editor
+          .chain()
+          .focus()
+          .redo()
+          .run()
+      "
+    /> -->
   </div>
+  <editor-content :editor="editor" />
 </template>
 
 <script>
@@ -110,6 +347,13 @@ export default {
 
 <style scoped>
 button {
-  margin: 0 5px;
+  padding: 0;
+  margin: 0;
+  height: 40px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 5px;
 }
 </style>
