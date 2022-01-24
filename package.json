@@ -7,6 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@tiptap/extension-heading": "^2.0.0-beta.26",
+    "@tiptap/extension-placeholder": "^2.0.0-beta.46",
     "@tiptap/starter-kit": "^2.0.0-beta.174",
     "@tiptap/vue-3": "^2.0.0-beta.89",
     "core-js": "^3.6.5",

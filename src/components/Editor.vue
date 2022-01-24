@@ -21,6 +21,22 @@
       "
     />
     <button
+      class="fa fa-h1"
+      @click.prevent="editor.commands.toggleHeading({ level: 1 })"
+    />
+    <button
+      class="fa fa-h2"
+      @click.prevent="editor.commands.toggleHeading({ level: 2 })"
+    />
+    <button
+      class="fa fa-h3"
+      @click.prevent="editor.commands.toggleHeading({ level: 3 })"
+    />
+    <button
+      class="fa fa-h4"
+      @click.prevent="editor.commands.toggleHeading({ level: 4 })"
+    />
+    <button
       class="fa fa-code"
       @click.prevent="
         editor

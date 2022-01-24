@@ -3,7 +3,8 @@
     <h2>My Examples</h2>
     <div v-if="playlists">
       <div v-for="playlist in playlists" :key="playlist.id">
-        <div v-html="playlist.content"></div>
+        <!-- <div v-html="playlist.content"></div> -->
+        <div>{{ playlist.title }}</div>
       </div>
     </div>
     <router-link :to="{ name: 'CreatePlaylist' }" class="btn"

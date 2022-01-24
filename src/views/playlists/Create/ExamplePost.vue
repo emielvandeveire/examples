@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit">
+    <input placeholder="Title" type="text" required v-model="title" />
     <editor v-model="content" />
 
     <div class="content"></div>
@@ -13,18 +14,16 @@ import Editor from "@/components/Editor.vue";
 import { timestamp } from "@/firebase/config";
 import useCollection from "@/composables/useCollection";
 import { ref } from "vue";
-
 export default {
   components: {
     Editor,
   },
 
   setup() {
-    const { error, addDoc } = useCollection("playlists");
+    const { addDoc } = useCollection("playlists");
 
-    const content = ref(
-      "<p>A Vue.js wrapper component for tiptap to use <code>v-model</code>.</p>"
-    );
+    const content = ref("");
+    const title = ref("");
     const isPending = ref(false);
     // const handleSubmit = async () => {
     //   await addDoc({
@@ -51,7 +50,7 @@ export default {
     const handleSubmit = async () => {
       isPending.value = true;
       const res = await addDoc({
-        title: "",
+        title: title.value,
         content: content.value,
         description: "",
         description2: "",
@@ -77,6 +76,7 @@ export default {
       content,
       handleSubmit,
       isPending,
+      title,
     };
   },
 };
