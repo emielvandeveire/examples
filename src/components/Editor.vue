@@ -1,0 +1,28 @@
+<template>
+  <editor-content :editor="editor" />
+</template>
+
+<script>
+import { useEditor, EditorContent } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+
+export default {
+  components: {
+    EditorContent,
+  },
+
+  setup() {
+    const editor = useEditor({
+      content: "",
+      extensions: [StarterKit],
+    });
+    console.log(useEditor.content)
+
+    return {
+      editor,
+    };
+  },
+};
+</script>
+
+<style></style>

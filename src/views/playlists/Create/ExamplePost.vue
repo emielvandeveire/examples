@@ -1,13 +1,35 @@
 <template>
-  <h2>Post</h2>
+  <form >
+    <editor v-model="postContent" />
+    <button @click.prevent="handleSubmit">Submit</button>
+    <pre><code>{{ postContent }}</code></pre>
+  </form>
 </template>
 
 <script>
-export default {};
-</script>
+import { useEditor, EditorContent } from "@tiptap/vue-3";
+import useCollection from "@/composables/useCollection";
+import StarterKit from "@tiptap/starter-kit";
+import { ref } from "@vue/reactivity";
+import Editor from "@/components/Editor.vue"
 
-<style scoped>
-h2 {
-  border-bottom: 1px solid var(--secondary);
-}
-</style>
+export default {
+  components: {
+    Editor,
+  },
+
+  setup() {
+    const postContent = ref("");
+    // const { addDoc } = useCollection("playlists");
+
+    const handleSubmit = async () => {
+      console.log(postContent)
+    };
+
+    return {
+      postContent,
+      handleSubmit,
+    };
+  },
+};
+</script>
