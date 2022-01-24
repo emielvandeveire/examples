@@ -212,6 +212,7 @@ export default {
           coverFilePath: imagefilePath.value,
           videoFilePath: videofilePath.value,
           songs: [],
+          type: "video",
           createdAt: timestamp(),
         });
         isPending.value = false;

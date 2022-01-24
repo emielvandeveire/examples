@@ -1,17 +1,18 @@
 <template>
-  <form >
-    <editor v-model="postContent" />
-    <button @click.prevent="handleSubmit">Submit</button>
-    <pre><code>{{ postContent }}</code></pre>
+  <form @submit.prevent="handleSubmit">
+    <editor v-model="content" />
+
+    <div class="content"></div>
+    <button v-if="!isPending">Create</button>
+    <button v-else disabled>Saving...</button>
   </form>
 </template>
 
 <script>
-import { useEditor, EditorContent } from "@tiptap/vue-3";
+import Editor from "@/components/Editor.vue";
+import { timestamp } from "@/firebase/config";
 import useCollection from "@/composables/useCollection";
-import StarterKit from "@tiptap/starter-kit";
-import { ref } from "@vue/reactivity";
-import Editor from "@/components/Editor.vue"
+import { ref } from "vue";
 
 export default {
   components: {
@@ -19,17 +20,111 @@ export default {
   },
 
   setup() {
-    const postContent = ref("");
-    // const { addDoc } = useCollection("playlists");
+    const { error, addDoc } = useCollection("playlists");
 
+    const content = ref(
+      "<p>A Vue.js wrapper component for tiptap to use <code>v-model</code>.</p>"
+    );
+    const isPending = ref(false);
+    // const handleSubmit = async () => {
+    //   await addDoc({
+    //     type: "post",
+    //     content: content.value,
+    //     title: "",
+    //     description: "",
+    //     description2: "",
+    //     links: "",
+    //     codes: "",
+    //     tags: "",
+    //     preparations: "",
+    //     userId: "",
+    //     userName: "",
+    //     coverUrl: "",
+    //     videoUrl: "",
+    //     coverFilePath: "",
+    //     videoFilePath: "",
+    //     songs: [],
+    //     createdAt: timestamp(),
+    //   });
+    //   content.value = "";
+    // };
     const handleSubmit = async () => {
-      console.log(postContent)
+      isPending.value = true;
+      const res = await addDoc({
+        title: "",
+        content: content.value,
+        description: "",
+        description2: "",
+        links: [],
+        codes: [],
+        tags: [],
+        preparations: [],
+        userId: "CNU7H9n7rmMpH8MIuQwbhJ9hyk03",
+        userName: "",
+        coverUrl: "",
+        videoUrl: "",
+        coverFilePath: "",
+        videoFilePath: "",
+        songs: [],
+        type: "post",
+        createdAt: timestamp(),
+      });
+      isPending.value = false;
+      content.value = "";
     };
 
     return {
-      postContent,
+      content,
       handleSubmit,
+      isPending,
     };
   },
 };
 </script>
+
+<style>
+.ProseMirror {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px rgba(50, 50, 50, 0.05);
+  border: 1px solid var(--secondary);
+  background: white;
+}
+.ProseMirror > * + * {
+  margin-top: 0.75em;
+}
+.ProseMirror:focus {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px rgba(50, 50, 50, 0.05);
+  border: 1px solid var(--secondary);
+  background: white;
+  outline: none;
+}
+.ProseMirror code {
+  background-color: rgba(97, 97, 97, 0.1);
+  color: #616161;
+}
+.content {
+  padding: 1rem 0 0;
+}
+.content h3 {
+  margin: 1rem 0 0.5rem;
+}
+.content pre {
+  border-radius: 5px;
+  color: #333;
+}
+.content code {
+  display: block;
+  white-space: pre-wrap;
+  font-size: 0.8rem;
+  padding: 0.75rem 1rem;
+  background-color: #e9ecef;
+  color: #495057;
+}
+</style>
