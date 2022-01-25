@@ -111,6 +111,10 @@ export default {
   background-color: rgba(97, 97, 97, 0.1);
   color: #616161;
 }
+blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid var(--secondary);
+}
 .content {
   padding: 1rem 0 0;
 }

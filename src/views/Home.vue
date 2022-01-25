@@ -13,6 +13,9 @@
     <div v-if="documents">
       <ListView :playlists="documents" />
     </div>
+    <router-link :to="{ name: 'CreatePlaylist' }" class="btn"
+      >Create a New Example</router-link
+    >
   </div>
 </template>
 

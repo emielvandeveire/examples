@@ -1,13 +1,10 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="playlist-details">
-    <div class="example">
-      <VideoPlayer :playlist="playlist" />
-      <!-- song list -->
-    </div>
+    <video width="600" controls :src="playlist.videoUrl"></video>
 
     <!-- playlist information -->
-    <div>
+    <div class="info-and-comments">
       <div class="playlist-info">
         <!-- <div class="video">
         <video width="600" controls :src="playlist.videoUrl"></video>
@@ -88,7 +85,6 @@
 
 <script>
 import AddSong from "@/components/AddSong.vue";
-import VideoPlayer from "@/components/VideoPlayer.vue";
 import useStorage from "@/composables/useStorage";
 import useDocument from "@/composables/useDocument";
 import getDocument from "@/composables/getDocument";
@@ -98,7 +94,7 @@ import { useRouter } from "vue-router";
 
 export default {
   props: ["id"],
-  components: { AddSong, VideoPlayer },
+  components: { AddSong },
   setup(props) {
     const { error, document: playlist } = getDocument("playlists", props.id);
     const { user } = getUser();
@@ -142,8 +138,15 @@ export default {
 <style>
 .playlist-details {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 0px;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+@media only screen and (max-width: 1200px){
+  .playlist-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, minmax(100px, 1fr));
+  }
 }
 .cover {
   overflow: hidden;
@@ -220,5 +223,13 @@ li {
 }
 .example {
   padding-right: 25px;
+}
+video {
+  border-radius: 10px;
+  width: auto;
+  max-width: 100%;
+}
+.info-and-comments .song-list {
+  margin-top: 5px;
 }
 </style>
