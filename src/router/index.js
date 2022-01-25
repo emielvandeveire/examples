@@ -6,6 +6,7 @@ import CreatePlaylist from "../views/playlists/Create/CreatePlaylist.vue";
 import ExampleVideo from "../views/playlists/Create/ExampleVideo.vue";
 import ExamplePost from "../views/playlists/Create/ExamplePost.vue";
 import PlaylistDetails from "../views/playlists/PlaylistDetails.vue";
+import PostDetails from "../views/playlists/PostDetails.vue";
 import UserDetails from "../views/playlists/UserDetails.vue";
 import PostPlaylists from "../views/playlists/PostPlaylists.vue";
 import UserPlaylists from "../views/playlists/UserPlaylists.vue";
@@ -53,25 +54,32 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
+    path: "/posts/:id",
+    name: "PostDetails",
+    component: PostDetails,
+    props: true,
+    beforeEnter: requireAuth,
+  },
+  {
     path: "/playlists/user",
     name: "UserPlaylists",
     component: UserPlaylists,
     beforeEnter: requireAuth,
   },
   {
-    path: "/playlists/posts",
+    path: "/posts",
     name: "PostPlaylists",
     component: PostPlaylists,
     beforeEnter: requireAuth,
   },
   {
-    path: "/playlists/create/video",
+    path: "/videos/create",
     name: "ExampleVideo",
     component: ExampleVideo,
     beforeEnter: requireAuth,
   },
   {
-    path: "/playlists/create/post",
+    path: "/posts/create",
     name: "ExamplePost",
     component: ExamplePost,
     beforeEnter: requireAuth,

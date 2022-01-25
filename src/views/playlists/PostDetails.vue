@@ -1,87 +1,87 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
-  <div v-if="playlist" class="playlist-details">
-    <div class="example">
-      <VideoPlayer :playlist="playlist" />
-      <!-- song list -->
-    </div>
-
+  <div v-if="playlist" class="example">
     <!-- playlist information -->
+
+    <div class="content-test">
+      <div v-html="playlist.content"></div>
+    </div>
     <div>
-      <div class="playlist-info">
-        <!-- <div class="video">
+        <div class="playlist-info">
+      <!-- <div class="video">
         <video width="600" controls :src="playlist.videoUrl"></video>
       </div> -->
-        <h2>{{ playlist.title }}</h2>
-        <router-link
-          :to="{ name: 'UserDetails', params: { userId: playlist.userId } }"
-          class="username"
-          >Created by <b>{{ playlist.userName }}</b></router-link
-        >
+      <h2>{{ playlist.title }}</h2>
+      <router-link
+        :to="{ name: 'UserDetails', params: { userId: playlist.userId } }"
+        class="username"
+        >Created by <b>{{ playlist.userName }}</b></router-link
+      >
 
-        <div v-if="playlist.description">
-          <h3>Description</h3>
-          <p class="description">{{ playlist.description }}</p>
+      <div v-if="playlist.description">
+        <h3>Description</h3>
+        <p class="description">{{ playlist.description }}</p>
+      </div>
+      <div v-if="playlist.description2">
+        <h3>Second Description</h3>
+        <p class="description">{{ playlist.description2 }}</p>
+      </div>
+      <h3 v-if="playlist.links.length">Links</h3>
+      <div v-for="link in playlist.links" :key="link.id">
+        <h4>{{ link.linkTitle }}</h4>
+        <span
+          v-if="ownership"
+          @click="handleLinkDelete(link.id)"
+          class="material-icons warning"
+        >
+          cancel
+        </span>
+        <a class="link-container" :href="link.link"
+          ><div class="material-icons link-icon icon">
+            &#xe157;
+          </div>
+          <p>{{ link.link }}</p>
+        </a>
+      </div>
+      <h3 v-if="playlist.tags.length">Tags</h3>
+      <div class="tag-container">
+        <div v-for="tag in playlist.tags" :key="tag.id">
+          <div class="tag">{{ tag.tagTitle }}</div>
         </div>
-        <div v-if="playlist.description2">
-          <h3>Second Description</h3>
-          <p class="description">{{ playlist.description2 }}</p>
-        </div>
-        <h3 v-if="playlist.links.length">Links</h3>
-        <div v-for="link in playlist.links" :key="link.id">
-          <h4>{{ link.linkTitle }}</h4>
-          <span
-            v-if="ownership"
-            @click="handleLinkDelete(link.id)"
-            class="material-icons warning"
+      </div>
+      <div
+        v-if="playlist.preparations.length"
+        class="preparation-container-div"
+      >
+        <h3>What you will learn</h3>
+        <ul class="preparation-container">
+          <li
+            v-for="preparation in playlist.preparations"
+            :key="preparation.id"
           >
-            cancel
-          </span>
-          <a class="link-container" :href="link.link"
-            ><div class="material-icons link-icon icon">
-              &#xe157;
-            </div>
-            <p>{{ link.link }}</p>
-          </a>
-        </div>
-        <h3 v-if="playlist.tags.length">Tags</h3>
-        <div class="tag-container">
-          <div v-for="tag in playlist.tags" :key="tag.id">
-            <div class="tag">{{ tag.tagTitle }}</div>
-          </div>
-        </div>
-        <div
-          v-if="playlist.preparations.length"
-          class="preparation-container-div"
-        >
-          <h3>What you will learn</h3>
-          <ul class="preparation-container">
-            <li
-              v-for="preparation in playlist.preparations"
-              :key="preparation.id"
-            >
-              <p class="preparation">{{ preparation.preparationTitle }}</p>
-            </li>
-          </ul>
-        </div>
+            <p class="preparation">{{ preparation.preparationTitle }}</p>
+          </li>
+        </ul>
+      </div>
 
-        <button class="warning" v-if="ownership" @click="handleDelete">
-          Delete Playlist
-        </button>
+      <button class="warning" v-if="ownership" @click="handleDelete">
+        Delete Playlist
+      </button>
+    </div>
+    <!-- song list -->
+    <div class="song-list">
+      <div v-if="!playlist.songs.length">
+        No comments have been added yet.
       </div>
-      <div class="song-list">
-        <div v-if="!playlist.songs.length">
-          No comments have been added yet.
+      <div v-for="song in playlist.songs" :key="song.id" class="single-song">
+        <div class="details">
+          <h3>{{ song.title }}</h3>
+          <p>{{ song.artist }}</p>
         </div>
-        <div v-for="song in playlist.songs" :key="song.id" class="single-song">
-          <div class="details">
-            <h3>{{ song.title }}</h3>
-            <p>{{ song.artist }}</p>
-          </div>
-          <button v-if="ownership" @click="handleClick(song.id)">delete</button>
-        </div>
-        <AddSong :playlist="playlist" />
+        <button v-if="ownership" @click="handleClick(song.id)">delete</button>
       </div>
+      <AddSong :playlist="playlist" />
+    </div>
     </div>
   </div>
 </template>
@@ -140,9 +140,9 @@ export default {
 </script>
 
 <style>
-.playlist-details {
+.example {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 1fr;
   gap: 0px;
 }
 .cover {
@@ -209,6 +209,7 @@ li {
   text-align: start;
   margin: 0;
 }
+.content-test,
 .playlist-info,
 .song-list {
   border-radius: 8px;

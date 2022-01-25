@@ -2,7 +2,7 @@
   <!-- <div>
     <button
       class="fa fa-bold"
-      @click.prevent="
+      @click.prevent.prevent="
         editor
           .chain()
           .focus()
@@ -12,7 +12,7 @@
     />
     <button
       class="fa fa-italic"
-      @click.prevent="
+      @click.prevent.prevent="
         editor
           .chain()
           .focus()
@@ -51,7 +51,7 @@
   <div class="grid-container" v-if="editor">
     <button
       class="fa fa-bold"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -62,7 +62,7 @@
 
     <button
       class="fa fa-italic"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -73,7 +73,7 @@
 
     <button
       class="fa fa-strikethrough"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -84,7 +84,7 @@
 
     <button
       class="fa fa-code"
-      @click.prevent="
+      @click.prevent.prevent="
         editor
           .chain()
           .focus()
@@ -95,7 +95,7 @@
 
     <button
       class="fa fa-file-code"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -107,7 +107,7 @@
 
     <button
       class="fa fa-remove-format"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -118,7 +118,7 @@
 
     <!-- <button
       class="fa fa-window-close"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -129,7 +129,7 @@
 
     <button
       class="fa fa-paragraph"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -141,7 +141,7 @@
 
     <button
       class="fa fa-list-ul"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -153,7 +153,7 @@
 
     <button
       class="fa fa-list-ol"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -164,7 +164,7 @@
     />
 
     <button
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -172,20 +172,24 @@
           .run()
       "
       :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-    >H1</button>
+    >
+      H1
+    </button>
 
     <button
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
           .toggleHeading({ level: 2 })
           .run()
       "
-    >H2</button>
+    >
+      H2
+    </button>
 
     <button
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -193,10 +197,12 @@
           .run()
       "
       :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
-    >H3</button>
+    >
+      H3
+    </button>
 
     <button
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -204,10 +210,12 @@
           .run()
       "
       :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
-    >H4</button>
+    >
+      H4
+    </button>
 
     <button
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -215,10 +223,12 @@
           .run()
       "
       :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
-    >H5</button>
+    >
+      H5
+    </button>
 
     <button
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -226,11 +236,13 @@
           .run()
       "
       :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
-    >H6</button>
+    >
+      H6
+    </button>
 
     <button
       class="fa fa-quote-right"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -242,7 +254,7 @@
 
     <button
       class="fa fa-horizontal-rule"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -253,7 +265,7 @@
 
     <button
       class="fa fa-page-break"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -264,7 +276,7 @@
 
     <!-- <button
       class="fa fa-undo"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()
@@ -275,7 +287,7 @@
 
     <button
       class="fa fa-redo"
-      @click="
+      @click.prevent="
         editor
           .chain()
           .focus()

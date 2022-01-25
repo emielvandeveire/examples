@@ -1,11 +1,16 @@
 <template>
   <div class="post-playlists">
-    <h2>My Examples</h2>
+    <div class="page-link-container">
+      <router-link :to="{ name: 'Home' }" class="page-link">
+        Videos
+      </router-link>
+      <div class="page-link active-link"
+        >Posts</div
+      >
+    </div>
+    <h2 class="h2-border">Post Examples</h2>
     <div v-if="playlists">
-      <div v-for="playlist in playlists" :key="playlist.id">
-        <!-- <div v-html="playlist.content"></div> -->
-        <div>{{ playlist.title }}</div>
-      </div>
+      <PostView :playlists="playlists" />
     </div>
     <router-link :to="{ name: 'CreatePlaylist' }" class="btn"
       >Create a New Example</router-link
@@ -15,6 +20,9 @@
 
 <script>
 import getCollection from "@/composables/getCollection";
+import PostView from "@/components/PostView";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
@@ -23,8 +31,16 @@ export default {
       "==",
       "post",
     ]);
-    console.log(playlists)
-    return { playlists };
+    const route = useRoute();
+    const currentRouteName = computed(() => {
+      return route.name;
+    });
+
+    return { playlists, currentRouteName };
+  },
+  components: {
+    PostView,
+    
   },
 };
 </script>
@@ -37,5 +53,8 @@ h2 {
 }
 .btn {
   margin-top: 20px;
+}
+.h2-border {
+  border-bottom: 1px solid var(--secondary);
 }
 </style>

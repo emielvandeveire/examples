@@ -12,6 +12,7 @@
 <script>
 import Editor from "@/components/Editor.vue";
 import { timestamp } from "@/firebase/config";
+import getUser from "@/composables/getUser";
 import useCollection from "@/composables/useCollection";
 import { ref } from "vue";
 export default {
@@ -21,6 +22,7 @@ export default {
 
   setup() {
     const { addDoc } = useCollection("playlists");
+    const { user } = getUser();
 
     const content = ref("");
     const title = ref("");
@@ -58,8 +60,8 @@ export default {
         codes: [],
         tags: [],
         preparations: [],
-        userId: "CNU7H9n7rmMpH8MIuQwbhJ9hyk03",
-        userName: "",
+        userId: user.value.uid,
+        userName: user.value.displayName,
         coverUrl: "",
         videoUrl: "",
         coverFilePath: "",
