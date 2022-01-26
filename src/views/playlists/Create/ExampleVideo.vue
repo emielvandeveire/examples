@@ -275,13 +275,12 @@ export default {
     const wantPreparations = ref(false);
     const wantCodes = ref(false);
 
-    // allowed file imageTypes
-    const imageTypes = ["image/png", "image/jpeg", "image/HEIC"];
+
     const handleImageChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
 
-      if (selected && imageTypes.includes(selected.type)) {
+      if (selected) {
         imageFile.value = selected;
         fileError.value = null;
       } else {
@@ -290,12 +289,11 @@ export default {
       }
     };
 
-    const videoTypes = ["video/mp4", "video/mov", "video/MOV"];
     const handleVideoChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
 
-      if (selected && videoTypes.includes(selected.type)) {
+      if (selected) {
         videoFile.value = selected;
         fileError.value = null;
       } else {

@@ -1,7 +1,9 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="playlist-details">
-    <video width="600" controls :src="playlist.videoUrl"></video>
+    <video width="600" controls>
+      <source :src="playlist.videoUrl">
+    </video>
 
     <!-- playlist information -->
     <div class="info-and-comments">
