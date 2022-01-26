@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <input placeholder="Title" type="text" required v-model="title" />
+    <input placeholder="Question" type="text" required v-model="title" />
     <editor v-model="content" />
     <div class="extra-info">
       <!-- Tags -->
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="content"></div>
-    <button v-if="!isPending">Create</button>
+    <button v-if="!isPending">Ask</button>
     <button v-else disabled>Saving...</button>
   </form>
 </template>
@@ -39,7 +39,7 @@ export default {
   },
 
   setup() {
-    const { addDoc } = useCollection("posts");
+    const { addDoc } = useCollection("questions");
     const { user } = getUser();
 
     const content = ref("");
@@ -80,7 +80,6 @@ export default {
     const handleTagSubmit = () => {
       const newTag = {
         tagTitle: tagTitle.value,
-        id: Math.floor(Math.random() * 1000000),
       };
       tagTitle.value = "";
       tags.value = [...tags.value, newTag];

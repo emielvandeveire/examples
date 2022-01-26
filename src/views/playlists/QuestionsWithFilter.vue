@@ -4,15 +4,12 @@
       <router-link :to="{ name: 'Home' }" class="page-link">
         Videos
       </router-link>
-      <div class="page-link active-link">Posts</div>
-      <!-- <router-link
-        :to="{ name: 'Questions', params: { tagTitle: 'test' } }"
-        class="page-link"
+      <router-link :to="{ name: 'PostPlaylists' }" class="page-link"
+        >Posts</router-link
       >
-        Questions
-      </router-link> -->
+      <div class="page-link active-link">Questions</div>
     </div>
-    <h2 class="h2-border">Post Examples</h2>
+    <h2 class="h2-border">Questions</h2>
     <div v-if="playlists">
       <PostView :playlists="playlists" />
     </div>
@@ -25,22 +22,17 @@
 <script>
 import getCollection from "@/composables/getCollection";
 import PostView from "@/components/PostView";
-import { computed } from "vue";
-import { useRoute } from "vue-router";
 
 export default {
-  setup() {
-    const { documents: playlists } = getCollection("posts", [
-      "type",
-      "==",
-      "post",
+  props: ["tagTitle"],
+  setup(props) {
+    const { documents: playlists } = getCollection("questions", [
+        "tags",
+        "array-contains-any",
+        [{ tagTitle: props.tagTitle }],
     ]);
-    const route = useRoute();
-    const currentRouteName = computed(() => {
-      return route.name;
-    });
 
-    return { playlists, currentRouteName };
+    return { playlists };
   },
   components: {
     PostView,
@@ -49,11 +41,6 @@ export default {
 </script>
 
 <style>
-h2 {
-  padding-bottom: 10px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid var(--secondary);
-}
 .btn {
   margin-top: 20px;
 }

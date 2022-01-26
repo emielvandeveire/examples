@@ -7,6 +7,12 @@
       <router-link :to="{ name: 'PostPlaylists' }" class="page-link"
         >Posts</router-link
       >
+      <!-- <router-link
+        :to="{ name: 'Questions', params: { tagTitle: 'test' } }"
+        class="page-link"
+      >
+        Questions
+      </router-link> -->
     </div>
     <h2 class="h2-border">Video Examples</h2>
     <div v-if="error" class="error">Could not fetch the data</div>

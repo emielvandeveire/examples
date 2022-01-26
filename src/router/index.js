@@ -3,12 +3,14 @@ import Home from "../views/Home.vue";
 import Login from "../views/auth/Login.vue";
 import Signup from "../views/auth/Signup.vue";
 import CreatePlaylist from "../views/playlists/Create/CreatePlaylist.vue";
+import CreateQuestion from "../views/playlists/Create/CreateQuestion.vue";
 import ExampleVideo from "../views/playlists/Create/ExampleVideo.vue";
 import ExamplePost from "../views/playlists/Create/ExamplePost.vue";
 import PlaylistDetails from "../views/playlists/PlaylistDetails.vue";
 import PostDetails from "../views/playlists/PostDetails.vue";
 import UserDetails from "../views/playlists/UserDetails.vue";
 import PostPlaylists from "../views/playlists/PostPlaylists.vue";
+import QuestionsWithFilter from "../views/playlists/QuestionsWithFilter.vue";
 import UserPlaylists from "../views/playlists/UserPlaylists.vue";
 
 // route guard
@@ -73,6 +75,13 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
+    path: "/questions/:tagTitle",
+    name: "QuestionsWithFilter",
+    component: QuestionsWithFilter,
+    props: true,
+    beforeEnter: requireAuth,
+  },
+  {
     path: "/videos/create",
     name: "ExampleVideo",
     component: ExampleVideo,
@@ -82,6 +91,12 @@ const routes = [
     path: "/posts/create",
     name: "ExamplePost",
     component: ExamplePost,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/questions/create",
+    name: "CreateQuestion",
+    component: CreateQuestion,
     beforeEnter: requireAuth,
   },
   {

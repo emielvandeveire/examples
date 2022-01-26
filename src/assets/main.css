@@ -129,7 +129,7 @@ form label:hover span.icon {
 .link-link {
   text-align: start;
 }
-div.tag {
+.tag {
   padding: 2px 20px;
   margin: 5px;
   background: var(--secondary);
@@ -151,4 +151,6 @@ ul {
 
 h2 {
   border: none;
+  margin: 0;
+  padding: 0;
 }

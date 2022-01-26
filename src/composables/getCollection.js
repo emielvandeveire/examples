@@ -12,6 +12,7 @@ const getCollection = (collection, query) => {
 
   if (query) {
     collectionRef = collectionRef.where(...query);
+    console.log(collectionRef)
   }
 
   const unsub = collectionRef.onSnapshot(
