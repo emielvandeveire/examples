@@ -21,7 +21,7 @@ export default {
   },
 
   setup() {
-    const { addDoc } = useCollection("playlists");
+    const { addDoc } = useCollection("posts");
     const { user } = getUser();
 
     const content = ref("");

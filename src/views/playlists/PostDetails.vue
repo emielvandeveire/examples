@@ -99,9 +99,9 @@ export default {
   props: ["id"],
   components: { AddSong },
   setup(props) {
-    const { error, document: playlist } = getDocument("playlists", props.id);
+    const { error, document: playlist } = getDocument("posts", props.id);
     const { user } = getUser();
-    const { deleteDoc, updateDoc } = useDocument("playlists", props.id);
+    const { deleteDoc, updateDoc } = useDocument("posts", props.id);
     const { deleteImage } = useStorage();
     const router = useRouter();
 

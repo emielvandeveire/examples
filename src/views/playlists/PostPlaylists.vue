@@ -26,7 +26,7 @@ import { useRoute } from "vue-router";
 
 export default {
   setup() {
-    const { documents: playlists } = getCollection("playlists", [
+    const { documents: playlists } = getCollection("posts", [
       "type",
       "==",
       "post",
