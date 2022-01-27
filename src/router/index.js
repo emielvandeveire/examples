@@ -2,16 +2,22 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/auth/Login.vue";
 import Signup from "../views/auth/Signup.vue";
-import CreatePlaylist from "../views/playlists/Create/CreatePlaylist.vue";
-import CreateQuestion from "../views/playlists/Create/CreateQuestion.vue";
+import UserPlaylists from "../views/playlists/users/UserPlaylists.vue";
+
 import ExampleVideo from "../views/playlists/Create/ExampleVideo.vue";
+import PlaylistDetails from "../views/playlists/videos/PlaylistDetails.vue";
+import CreatePlaylist from "../views/playlists/Create/CreatePlaylist.vue";
+
 import ExamplePost from "../views/playlists/Create/ExamplePost.vue";
-import PlaylistDetails from "../views/playlists/PlaylistDetails.vue";
-import PostDetails from "../views/playlists/PostDetails.vue";
-import UserDetails from "../views/playlists/UserDetails.vue";
-import PostPlaylists from "../views/playlists/PostPlaylists.vue";
-import QuestionsWithFilter from "../views/playlists/QuestionsWithFilter.vue";
-import UserPlaylists from "../views/playlists/UserPlaylists.vue";
+import PostDetails from "../views/playlists/posts/PostDetails.vue";
+import PostPlaylists from "../views/playlists/posts/PostPlaylists.vue";
+
+import CreateQuestion from "../views/playlists/Create/CreateQuestion.vue";
+import QuestionDetails from "../views/playlists/questions/QuestionDetails.vue";
+import Questions from "../views/playlists/questions/Questions.vue";
+import QuestionsWithFilter from "../views/playlists/questions/QuestionsWithFilter.vue";
+
+import UserDetails from "../views/playlists/users/UserDetails.vue";
 
 // route guard
 import { projectAuth } from "../firebase/config";
@@ -63,9 +69,22 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
+    path: "/questionss/:qid",
+    name: "QuestionDetails",
+    component: QuestionDetails,
+    props: true,
+    beforeEnter: requireAuth,
+  },
+  {
     path: "/playlists/user",
     name: "UserPlaylists",
     component: UserPlaylists,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/questions",
+    name: "Questions",
+    component: Questions,
     beforeEnter: requireAuth,
   },
   {
@@ -75,7 +94,7 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
-    path: "/questions/:tagTitle",
+    path: "/questiontag/:tagTitle",
     name: "QuestionsWithFilter",
     component: QuestionsWithFilter,
     props: true,
@@ -114,8 +133,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = document.title + ' | ' + to.name
-  next()
+  document.title = document.title + " | " + to.name;
+  next();
 });
 
 export default router;

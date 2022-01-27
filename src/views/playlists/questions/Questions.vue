@@ -4,14 +4,17 @@
       <router-link :to="{ name: 'Home' }" class="page-link">
         Videos
       </router-link>
-      <router-link :to="{ name: 'PostPlaylists' }" class="page-link"
-        >Posts</router-link
+      <div class="page-link active-link">Posts</div>
+      <!-- <router-link
+        :to="{ name: 'Questions', params: { tagTitle: 'test' } }"
+        class="page-link"
       >
-      <div class="page-link active-link">Questions</div>
+        Questions
+      </router-link> -->
     </div>
     <h2 class="h2-border">Questions</h2>
     <div v-if="playlists">
-      <PostView :playlists="playlists" />
+      <QuestionView :playlists="playlists" />
     </div>
     <router-link :to="{ name: 'CreatePlaylist' }" class="btn"
       >Create a New Example</router-link
@@ -21,26 +24,26 @@
 
 <script>
 import getCollection from "@/composables/getCollection";
-import PostView from "@/components/PostView";
+import QuestionView from "@/components/QuestionView";
 
 export default {
-  props: ["tagTitle"],
-  setup(props) {
-    const { documents: playlists } = getCollection("questions", [
-        "tags",
-        "array-contains-any",
-        [{ tagTitle: props.tagTitle }],
-    ]);
+  setup() {
+    const { documents: playlists } = getCollection("questions");
 
     return { playlists };
   },
   components: {
-    PostView,
+    QuestionView,
   },
 };
 </script>
 
 <style>
+h2 {
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--secondary);
+}
 .btn {
   margin-top: 20px;
 }
