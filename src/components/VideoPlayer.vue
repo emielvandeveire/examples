@@ -1,6 +1,6 @@
 <template>
   <div class="video">
-    <video width="600" controls :src="playlist.videoUrl"></video>
+    
   </div>
 </template>
 
@@ -10,4 +10,14 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+video {
+  border-radius: 8px;
+}
+.video {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+
+}
+</style>

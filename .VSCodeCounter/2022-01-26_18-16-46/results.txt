@@ -1,0 +1,69 @@
+Date : 2022-01-26 18:16:46
+Directory : /Users/emielvdv/Desktop/testforerror/examples/src
+Total : 34 files,  2717 codes, 27 comments, 256 blanks, all 3000 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Vue        |         21 |      2,182 |          7 |        166 |      2,355 |
+| JavaScript |         12 |        395 |         14 |         82 |        491 |
+| CSS        |          1 |        140 |          6 |          8 |        154 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                        | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                           |         34 |      2,717 |         27 |        256 |      3,000 |
+| assets                                                                                      |          1 |        140 |          6 |          8 |        154 |
+| components                                                                                  |          7 |        703 |          6 |         62 |        771 |
+| composables                                                                                 |          9 |        250 |          9 |         64 |        323 |
+| firebase                                                                                    |          1 |         18 |          3 |          7 |         28 |
+| router                                                                                      |          1 |        114 |          1 |          7 |        122 |
+| views                                                                                       |         13 |      1,460 |          1 |        100 |      1,561 |
+| views/auth                                                                                  |          2 |         72 |          1 |         12 |         85 |
+| views/playlists                                                                             |         10 |      1,322 |          0 |         85 |      1,407 |
+| views/playlists/Create                                                                      |          4 |        699 |          0 |         43 |        742 |
++---------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                    | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/emielvdv/Desktop/testforerror/examples/src/App.vue                                   | Vue        |         19 |          0 |          4 |         23 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/assets/main.css                           | CSS        |        140 |          6 |          8 |        154 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/components/AddSong.vue                    | Vue        |         47 |          0 |          6 |         53 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/components/Editor.vue                     | Vue        |        333 |          6 |         33 |        372 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/components/HideOrShow.vue                 | Vue        |         58 |          0 |          5 |         63 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/components/ListView.vue                   | Vue        |         88 |          0 |          4 |         92 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/components/Navbar.vue                     | Vue        |         76 |          0 |          6 |         82 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/components/PostView.vue                   | Vue        |         82 |          0 |          4 |         86 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/components/VideoPlayer.vue                | Vue        |         19 |          0 |          4 |         23 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/getCollection.js              | JavaScript |         33 |          2 |          9 |         44 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/getDocument.js                | JavaScript |         26 |          2 |          7 |         35 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/getUser.js                    | JavaScript |         11 |          2 |          5 |         18 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/useCollection.js              | JavaScript |         21 |          1 |          6 |         28 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/useDocument.js                | JavaScript |         35 |          0 |          8 |         43 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/useLogin.js                   | JavaScript |         22 |          0 |          6 |         28 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/useLogout.js                  | JavaScript |         20 |          2 |          6 |         28 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/useSignup.js                  | JavaScript |         29 |          0 |          7 |         36 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/composables/useStorage.js                 | JavaScript |         53 |          0 |         10 |         63 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/firebase/config.js                        | JavaScript |         18 |          3 |          7 |         28 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/main.js                                   | JavaScript |         13 |          1 |          4 |         18 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/router/index.js                           | JavaScript |        114 |          1 |          7 |        122 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/Home.vue                            | Vue        |         66 |          0 |          3 |         69 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/auth/Login.vue                      | Vue        |         30 |          1 |          6 |         37 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/auth/Signup.vue                     | Vue        |         42 |          0 |          6 |         48 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/Create/CreatePlaylist.vue | Vue        |         49 |          0 |          3 |         52 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/Create/CreateQuestion.vue | Vue        |        147 |          0 |          7 |        154 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/Create/ExamplePost.vue    | Vue        |        148 |          0 |          7 |        155 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/Create/ExampleVideo.vue   | Vue        |        355 |          0 |         26 |        381 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/PlaylistDetails.vue       | Vue        |        226 |          0 |         12 |        238 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/PostDetails.vue           | Vue        |        217 |          0 |         12 |        229 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/PostPlaylists.vue         | Vue        |         59 |          0 |          5 |         64 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/QuestionsWithFilter.vue   | Vue        |         51 |          0 |          5 |         56 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/UserDetails.vue           | Vue        |         32 |          0 |          4 |         36 |
+| /Users/emielvdv/Desktop/testforerror/examples/src/views/playlists/UserPlaylists.vue         | Vue        |         38 |          0 |          4 |         42 |
+| Total                                                                                       |            |      2,717 |         27 |        256 |      3,000 |
++---------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

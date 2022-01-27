@@ -1,13 +1,7 @@
 <template>
   <div v-for="playlist in playlists" :key="playlist.id">
-    <router-link
-      v-if="playlist.type == 'video'"
-      :to="{ name: 'PlaylistDetails', params: { id: playlist.id } }"
-    >
+    <router-link :to="{ name: 'QuestionDetails', params: { qid: playlist.id } }">
       <div class="single">
-        <div class="thumbnail">
-          <img :src="playlist.coverUrl" />
-        </div>
         <div class="info">
           <div class="user-info">
             <h3>{{ playlist.title }}</h3>
@@ -15,7 +9,7 @@
           </div>
 
           <div class="icon">
-            <span class="material-icons">videocam</span>
+            <span class="material-icons">help</span>
           </div>
           <div class="song-number">
             <div

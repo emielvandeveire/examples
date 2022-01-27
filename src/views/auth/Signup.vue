@@ -11,25 +11,34 @@
 </template>
 
 <script>
-// using @ means start at the project src root
+import getUser from "@/composables/getUser"
 import useSignup from "@/composables/useSignup";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import useCollection from "@/composables/useCollection";
 
 export default {
   setup() {
     const { error, signup, isPending } = useSignup();
     const router = useRouter();
+    const { user } = getUser()
+    const { addDoc } = useCollection("users");
 
     const email = ref("");
     const password = ref("");
     const displayName = ref("");
 
     const handleSubmit = async () => {
-      const res = await signup(email.value, password.value, displayName.value);
+      await signup(email.value, password.value, displayName.value);
       if (!error.value) {
         router.push({ name: "UserPlaylists" });
       }
+      await addDoc({
+        email: email.value,
+        password: password.value,
+        displayName: displayName.value,
+        userId: user.value.uid,
+      })
     };
 
     return { email, password, displayName, handleSubmit, error, isPending };

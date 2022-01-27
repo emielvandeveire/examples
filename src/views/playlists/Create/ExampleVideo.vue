@@ -71,6 +71,11 @@
           <div v-for="link in links" :key="link.id">
             <h4>{{ link.linkTitle }}</h4>
             <a :href="link.link">{{ link.link }}</a>
+            <div>
+              <button @click="handleLinkDelete(link.id)" class="warning">
+                delete
+              </button>
+            </div>
           </div>
         </div>
 
@@ -205,8 +210,9 @@ export default {
           coverUrl: imageurl.value,
           videoUrl: videourl.value,
           coverFilePath: imagefilePath.value,
-          videoFilePath: videofilePath.value, // so we can delete it later
+          videoFilePath: videofilePath.value,
           songs: [],
+          type: "video",
           createdAt: timestamp(),
         });
         isPending.value = false;
@@ -227,6 +233,9 @@ export default {
       console.log(newLink);
       console.log(links.value);
     };
+    const handleLinkDelete = (id) => {
+      links.value = links.value.filter((link) => link.id != id);
+    }
     const handleCodeSubmit = () => {
       const newCode = {
         codeLanguage: codeLanguage.value,
@@ -266,13 +275,12 @@ export default {
     const wantPreparations = ref(false);
     const wantCodes = ref(false);
 
-    // allowed file imageTypes
-    const imageTypes = ["image/png", "image/jpeg", "image/HEIC"];
+
     const handleImageChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
 
-      if (selected && imageTypes.includes(selected.type)) {
+      if (selected) {
         imageFile.value = selected;
         fileError.value = null;
       } else {
@@ -281,12 +289,11 @@ export default {
       }
     };
 
-    const videoTypes = ["video/mp4", "video/mov", "video/MOV"];
     const handleVideoChange = (e) => {
       let selected = e.target.files[0];
       console.log(selected);
 
-      if (selected && videoTypes.includes(selected.type)) {
+      if (selected) {
         videoFile.value = selected;
         fileError.value = null;
       } else {
@@ -315,6 +322,7 @@ export default {
       handleImageChange,
       handleVideoChange,
       handleLinkSubmit,
+      handleLinkDelete,
       handleCodeSubmit,
       handleTagSubmit,
       handlePreparationSubmit,
