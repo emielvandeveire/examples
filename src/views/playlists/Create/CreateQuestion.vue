@@ -150,4 +150,7 @@ blockquote {
   background-color: #e9ecef;
   color: #495057;
 }
+ol, ul {
+  padding-left: 15px;
+}
 </style>

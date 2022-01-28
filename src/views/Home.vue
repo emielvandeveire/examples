@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-    <div class="ui icon input" style="width: 100%">
-      <input type="text" placeholder="Search..." v-model="searchQuery" />
-    </div>
     <div class="page-link-container">
       <div class="page-link active-link">
         Videos
@@ -18,7 +15,8 @@
       </router-link>
     </div>
     <h2 class="h2-border">Video Examples</h2>
-    <div v-if="error" class="error">Could not fetch the data</div>
+    <input type="text" placeholder="Search..." v-model="searchQuery" />
+    
     <div v-if="searchedVideos">
       <ListView :playlists="searchedVideos" />
     </div>
@@ -31,7 +29,7 @@
 <script>
 import firebase from "firebase";
 import ListView from "../components/ListView.vue";
-import getCollection from "../composables/getCollection";
+
 import { computed, onMounted, reactive, ref } from "vue";
 export default {
   name: "Home",
@@ -39,7 +37,7 @@ export default {
   setup() {
     const videos = reactive([]);
     const searchQuery = ref("");
-    const { error, documents } = getCollection("playlists");
+    
     const searchedVideos = computed(() => {
       return videos.filter((product) => {
         return (
@@ -65,7 +63,7 @@ export default {
       }
     });
 
-    return { error, searchedVideos, searchQuery };
+    return { searchedVideos, searchQuery };
   },
 };
 </script>

@@ -4,17 +4,17 @@
       <router-link :to="{ name: 'Home' }" class="page-link">
         Videos
       </router-link>
-      <div class="page-link active-link">Posts</div>
-      <!-- <router-link
-        :to="{ name: 'Questions', params: { tagTitle: 'test' } }"
-        class="page-link"
+      <router-link :to="{ name: 'PostPlaylists' }" class="page-link"
+        >Posts</router-link
       >
+      <div class="page-link active-link">
         Questions
-      </router-link> -->
+      </div>
     </div>
     <h2 class="h2-border">Questions</h2>
-    <div v-if="playlists">
-      <QuestionView :playlists="playlists" />
+    <input type="text" placeholder="Search..." v-model="searchQuery" />
+    <div v-if="searchedVideos">
+      <QuestionView :playlists="searchedVideos" />
     </div>
     <router-link :to="{ name: 'CreatePlaylist' }" class="btn"
       >Create a New Example</router-link
@@ -23,14 +23,41 @@
 </template>
 
 <script>
-import getCollection from "@/composables/getCollection";
+import firebase from "firebase";
 import QuestionView from "@/components/QuestionView";
+import { computed, onMounted, reactive, ref } from "vue";
 
 export default {
   setup() {
-    const { documents: playlists } = getCollection("questions");
+    const videos = reactive([]);
+    const searchQuery = ref("");
+    
+    const searchedVideos = computed(() => {
+      return videos.filter((product) => {
+        return (
+          product.title
+            .toLowerCase()
+            .indexOf(searchQuery.value.toLowerCase()) != -1
+        );
+      });
+    });
+    onMounted(async () => {
+      try {
+        const productsSnap = await firebase
+          .firestore()
+          .collection("questions")
+          .get();
+        productsSnap.forEach((doc) => {
+          let product = doc.data();
+          product.id = doc.id;
+          videos.push(product);
+        });
+      } catch (e) {
+        console.log("Error Loading Products");
+      }
+    });
 
-    return { playlists };
+    return { searchedVideos, searchQuery };
   },
   components: {
     QuestionView,

@@ -2,19 +2,27 @@
   <section>
     <form>
       <router-link :to="{ name: 'ExampleVideo' }"
-        ><button>
+        ><button class="create">
+          <div>Video</div>
           <span class="material-icons">
-            play_circle_filled
+            play_circle
           </span>
-          <div>Video Example</div>
         </button></router-link
       >
       <router-link :to="{ name: 'ExamplePost' }"
-        ><button>
+        ><button class="create">
+          <div>Post</div>
           <span class="material-icons">
             post_add
           </span>
-          <div>Post Example</div>
+        </button></router-link
+      >
+      <router-link :to="{ name: 'CreateQuestion' }"
+        ><button class="create">
+          <div>Question</div>
+          <span class="material-icons">
+            help_outline
+          </span>
         </button></router-link
       >
     </form>
@@ -29,7 +37,8 @@ export default {};
 button {
   margin: 5px;
 }
-button:hover div, button:hover span {
+button:hover div,
+button:hover span {
   color: white;
 }
 section {
@@ -47,5 +56,13 @@ form {
   padding: 50px 0;
   width: 400px;
   height: 100px;
+}
+.create {
+  width: 100px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

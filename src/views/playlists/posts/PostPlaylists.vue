@@ -5,16 +5,17 @@
         Videos
       </router-link>
       <div class="page-link active-link">Posts</div>
-      <!-- <router-link
+      <router-link
         :to="{ name: 'Questions', params: { tagTitle: 'test' } }"
         class="page-link"
       >
         Questions
-      </router-link> -->
+      </router-link>
     </div>
     <h2 class="h2-border">Post Examples</h2>
-    <div v-if="playlists">
-      <PostView :playlists="playlists" />
+    <input type="text" placeholder="Search..." v-model="searchQuery" />
+    <div v-if="searchedVideos">
+      <PostView :playlists="searchedVideos" />
     </div>
     <router-link :to="{ name: 'CreatePlaylist' }" class="btn"
       >Create a New Example</router-link
@@ -23,24 +24,42 @@
 </template>
 
 <script>
-import getCollection from "@/composables/getCollection";
+import firebase from "firebase";
+
 import PostView from "@/components/PostView";
-import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onMounted, reactive, ref } from "vue";
 
 export default {
   setup() {
-    const { documents: playlists } = getCollection("posts", [
-      "type",
-      "==",
-      "post",
-    ]);
-    const route = useRoute();
-    const currentRouteName = computed(() => {
-      return route.name;
+    const videos = reactive([]);
+    const searchQuery = ref("");
+    
+    const searchedVideos = computed(() => {
+      return videos.filter((product) => {
+        return (
+          product.title
+            .toLowerCase()
+            .indexOf(searchQuery.value.toLowerCase()) != -1
+        );
+      });
+    });
+    onMounted(async () => {
+      try {
+        const productsSnap = await firebase
+          .firestore()
+          .collection("posts")
+          .get();
+        productsSnap.forEach((doc) => {
+          let product = doc.data();
+          product.id = doc.id;
+          videos.push(product);
+        });
+      } catch (e) {
+        console.log("Error Loading Products");
+      }
     });
 
-    return { playlists, currentRouteName };
+    return { searchedVideos, searchQuery };
   },
   components: {
     PostView,

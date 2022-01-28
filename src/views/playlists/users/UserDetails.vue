@@ -3,19 +3,25 @@
     <!-- <div v-once> -->
     <h1 style="margin-bottom: 20px;">{{ playlists[0].userName }}</h1>
     <!-- </div> -->
-    <div v-if="playlists">
+    <div v-if="playlists.length">
       <h2>Videos</h2>
       <ListView :playlists="playlists" />
     </div>
 
-    <div v-if="posts">
+    <div v-else>This user has no videos</div>
+
+    <div v-if="posts.length">
       <h2>Posts</h2>
       <PostView :playlists="posts" />
     </div>
-    <div v-if="questions">
-      <h2>Questions</h2>
+
+    <div v-else>This user has no posts</div>
+    <div v-if="questions.length">
+      <h2 >Questions</h2>
       <QuestionView :playlists="questions" />
     </div>
+
+    <div v-else>This user has no questions</div>
   </div>
 </template>
 
