@@ -1,23 +1,26 @@
 <template>
   <div class="home">
+    <div class="ui icon input" style="width: 100%">
+      <input type="text" placeholder="Search..." v-model="searchQuery" />
+    </div>
     <div class="page-link-container">
-      <div v-if="currentRouteName == 'Home'" class="page-link active-link">
+      <div class="page-link active-link">
         Videos
       </div>
       <router-link :to="{ name: 'PostPlaylists' }" class="page-link"
         >Posts</router-link
       >
-      <!-- <router-link
+      <router-link
         :to="{ name: 'Questions', params: { tagTitle: 'test' } }"
         class="page-link"
       >
         Questions
-      </router-link> -->
+      </router-link>
     </div>
     <h2 class="h2-border">Video Examples</h2>
     <div v-if="error" class="error">Could not fetch the data</div>
-    <div v-if="documents">
-      <ListView :playlists="documents" />
+    <div v-if="searchedVideos">
+      <ListView :playlists="searchedVideos" />
     </div>
     <router-link :to="{ name: 'CreatePlaylist' }" class="btn"
       >Create a New Example</router-link
@@ -26,20 +29,43 @@
 </template>
 
 <script>
+import firebase from "firebase";
 import ListView from "../components/ListView.vue";
 import getCollection from "../composables/getCollection";
-import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onMounted, reactive, ref } from "vue";
 export default {
   name: "Home",
   components: { ListView },
   setup() {
+    const videos = reactive([]);
+    const searchQuery = ref("");
     const { error, documents } = getCollection("playlists");
-    const route = useRoute();
-    const currentRouteName = computed(() => {
-      return route.name;
+    const searchedVideos = computed(() => {
+      return videos.filter((product) => {
+        return (
+          product.title
+            .toLowerCase()
+            .indexOf(searchQuery.value.toLowerCase()) != -1
+        );
+      });
     });
-    return { error, documents, currentRouteName };
+    onMounted(async () => {
+      try {
+        const productsSnap = await firebase
+          .firestore()
+          .collection("playlists")
+          .get();
+        productsSnap.forEach((doc) => {
+          let product = doc.data();
+          product.id = doc.id;
+          videos.push(product);
+        });
+      } catch (e) {
+        console.log("Error Loading Products");
+      }
+    });
+
+    return { error, searchedVideos, searchQuery };
   },
 };
 </script>
