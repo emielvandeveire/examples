@@ -3,20 +3,31 @@
     <div class="ui icon input" style="width: 100%">
       <input type="text" placeholder="Search..." v-model="searchQuery" />
     </div>
-    <h2>Test</h2>
-    <ListView :playlists="searchedVideos" />
-    <h2>Test</h2>
-    <PostView :playlists="searchedPosts" />
-    <h2>Test</h2>
-    <QuestionView :playlists="searchedQuestions" />
+    <h2 class="h2-border">Videos</h2>
+    <ListView v-if="searchedVideos.length" :playlists="searchedVideos" />
+    <div class="error" v-else>
+      there are no videos with this search
+    </div>
+
+    <h2 class="h2-border">Posts</h2>
+    <PostView v-if="searchedPosts.length" :playlists="searchedPosts" />
+    <div class="error" v-else>
+      there are no posts with this search
+    </div>
+
+    <h2 class="h2-border">Questions</h2>
+    <QuestionView v-if="searchedQuestions.length" :playlists="searchedQuestions" />
+    <div class="error" v-else>
+      there are no questions with this search
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
-import ListView from "@/components/ListView"
-import PostView from "@/components/PostView"
-import QuestionView from "@/components/QuestionView"
+import ListView from "@/components/ListView";
+import PostView from "@/components/PostView";
+import QuestionView from "@/components/QuestionView";
 import { computed, onMounted, reactive, ref } from "vue";
 export default {
   setup() {
@@ -102,6 +113,6 @@ export default {
     ListView,
     PostView,
     QuestionView,
-  }
+  },
 };
 </script>
