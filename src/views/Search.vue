@@ -3,22 +3,27 @@
     <div class="ui icon input" style="width: 100%">
       <input type="text" placeholder="Search..." v-model="searchQuery" />
     </div>
-    <h2 class="h2-border">Videos</h2>
-    <ListView v-if="searchedVideos.length" :playlists="searchedVideos" />
-    <div class="error" v-else>
-      there are no videos with this search
-    </div>
+    <div v-if="searchQuery">
+      <h2 class="h2-border">Videos</h2>
+      <ListView :playlists="searchedVideos" />
+      <div class="error" v-if="!searchedVideos.length">
+        there are no videos with this search
+      </div>
 
-    <h2 class="h2-border">Posts</h2>
-    <PostView v-if="searchedPosts.length" :playlists="searchedPosts" />
-    <div class="error" v-else>
-      there are no posts with this search
-    </div>
+      <h2 class="h2-border">Posts</h2>
+      <PostView v-if="searchedPosts.length" :playlists="searchedPosts" />
+      <div class="error" v-else>
+        there are no posts with this search
+      </div>
 
-    <h2 class="h2-border">Questions</h2>
-    <QuestionView v-if="searchedQuestions.length" :playlists="searchedQuestions" />
-    <div class="error" v-else>
-      there are no questions with this search
+      <h2 class="h2-border">Questions</h2>
+      <QuestionView
+        v-if="searchedQuestions.length"
+        :playlists="searchedQuestions"
+      />
+      <div class="error" v-else>
+        there are no questions with this search
+      </div>
     </div>
   </div>
 </template>

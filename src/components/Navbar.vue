@@ -11,6 +11,11 @@
           <router-link :to="{ name: 'UserPlaylists' }"
             >My Examples</router-link
           >
+          <router-link :to="{ name: 'Search'}">
+            <i class="material-icons search-icon">
+              search
+            </i>
+          </router-link>
           <span>Hi there, {{ user.displayName }}</span>
           <button @click="handleClick">Logout</button>
         </div>
@@ -77,5 +82,8 @@ span {
   margin-left: 16px;
   padding-left: 16px;
   border-left: 1px solid #eee;
+}
+.search-icon {
+  height: 1px;
 }
 </style>

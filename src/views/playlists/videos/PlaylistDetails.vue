@@ -1,7 +1,7 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="playlist-details">
-    <video width="600" controls>
+    <video width="2000" controls>
       <source :src="playlist.videoUrl">
     </video>
 
@@ -228,7 +228,7 @@ li {
 }
 video {
   border-radius: 10px;
-  width: auto;
+  width: 100%;
   max-width: 100%;
 }
 .info-and-comments .song-list {
