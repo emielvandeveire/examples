@@ -5,6 +5,8 @@ import Login from "../views/auth/Login.vue";
 import Signup from "../views/auth/Signup.vue";
 import UserPlaylists from "../views/playlists/users/UserPlaylists.vue";
 
+import Chat from "../views/Chat/Chat"
+
 import ExampleVideo from "../views/playlists/Create/ExampleVideo.vue";
 import PlaylistDetails from "../views/playlists/videos/PlaylistDetails.vue";
 import CreatePlaylist from "../views/playlists/Create/CreatePlaylist.vue";
@@ -19,6 +21,7 @@ import Questions from "../views/playlists/questions/Questions.vue";
 import QuestionsWithFilter from "../views/playlists/questions/QuestionsWithFilter.vue";
 
 import UserDetails from "../views/playlists/users/UserDetails.vue";
+import Users from "../views/playlists/users/Users.vue";
 
 // route guard
 import { projectAuth } from "../firebase/config";
@@ -37,7 +40,6 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    beforeEnter: requireAuth,
   },
   {
     path: "/search",
@@ -129,6 +131,19 @@ const routes = [
     path: "/users/:userId",
     name: "UserDetails",
     component: UserDetails,
+    props: true,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/users/",
+    name: "Users",
+    component: Users,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/chat/:toUser",
+    name: "Chat",
+    component: Chat,
     props: true,
     beforeEnter: requireAuth,
   },

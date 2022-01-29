@@ -11,6 +11,12 @@
       >
         Questions
       </router-link>
+      <router-link
+        :to="{ name: 'Users'}"
+        class="page-link"
+      >
+        Users
+      </router-link>
     </div>
     <h2 class="h2-border">Post Examples</h2>
     <input type="text" placeholder="Search..." v-model="searchQuery" />

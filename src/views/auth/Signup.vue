@@ -11,17 +11,18 @@
 </template>
 
 <script>
-import getUser from "@/composables/getUser"
+import getUser from "@/composables/getUser";
 import useSignup from "@/composables/useSignup";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import useCollection from "@/composables/useCollection";
+import { timestamp } from "@/firebase/config";
 
 export default {
   setup() {
     const { error, signup, isPending } = useSignup();
     const router = useRouter();
-    const { user } = getUser()
+    const { user } = getUser();
     const { addDoc } = useCollection("users");
 
     const email = ref("");
@@ -36,9 +37,25 @@ export default {
       await addDoc({
         email: email.value,
         password: password.value,
-        displayName: displayName.value,
+        userName: displayName.value,
         userId: user.value.uid,
-      })
+
+        title: "",
+        content: "",
+        description: "",
+        description2: "",
+        links: [],
+        codes: [],
+        tags: "",
+        preparations: [],
+        coverUrl: "",
+        videoUrl: "",
+        coverFilePath: "",
+        videoFilePath: "",
+        songs: [],
+        type: "user",
+        createdAt: timestamp(),
+      });
     };
 
     return { email, password, displayName, handleSubmit, error, isPending };

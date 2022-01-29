@@ -70,6 +70,7 @@ export default {
           songs: [],
           type: "post",
           createdAt: timestamp(),
+          views: [],
         });
       }
       isPending.value = false;

@@ -4,17 +4,18 @@
       <i class="material-icons md-48">school</i>
       <h1><router-link :to="{ name: 'Home' }">Examples</router-link></h1>
       <div class="links">
-        <div v-if="user">
+        <div v-if="user" class="example-links">
           <router-link :to="{ name: 'CreatePlaylist' }"
             >Create Example</router-link
           >
-          <router-link :to="{ name: 'UserPlaylists' }"
-            >My Examples</router-link
-          >
-          <router-link :to="{ name: 'Search'}">
-            <i class="material-icons search-icon">
-              search
-            </i>
+          <router-link :to="{ name: 'UserPlaylists' }">My Examples</router-link>
+
+          <router-link :to="{ name: 'Search' }">
+            <button class="material-icons search-icon">
+              <!-- <div class="material-icons"> -->
+                search
+              <!-- </div> -->
+            </button>
           </router-link>
           <span>Hi there, {{ user.displayName }}</span>
           <button @click="handleClick">Logout</button>
@@ -84,6 +85,24 @@ span {
   border-left: 1px solid #eee;
 }
 .search-icon {
-  height: 1px;
+  font-size: 20px;
+  padding: 15px;
+  height: 25px;
+  width: 25px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-icon:hover div {
+  color: white;
+}
+.search-icon div {
+  margin: 0;
+  padding: 0;
+}
+.example-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

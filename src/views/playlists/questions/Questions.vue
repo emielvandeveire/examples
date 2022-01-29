@@ -10,6 +10,12 @@
       <div class="page-link active-link">
         Questions
       </div>
+      <router-link
+        :to="{ name: 'Users'}"
+        class="page-link"
+      >
+        Users
+      </router-link>
     </div>
     <h2 class="h2-border">Questions</h2>
     <input type="text" placeholder="Search..." v-model="searchQuery" />

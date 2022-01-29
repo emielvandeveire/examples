@@ -2,7 +2,6 @@
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="example">
     <!-- playlist information -->
-
     <div class="content-test">
       <div v-html="playlist.content"></div>
     </div>
@@ -89,6 +88,19 @@
         </div>
         <AddSong :playlist="playlist" />
       </div>
+      <div class="content-test likes">
+        <button
+          v-if="!alreadyLiked"
+          class="material-icons"
+          @click="handleLikes"
+        >
+          favorite_border
+        </button>
+        <button v-if="alreadyLiked" class="material-icons" @click="handleLikes">
+          favorite
+        </button>
+        <h1>{{ playlist.views.length }}</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -108,7 +120,7 @@ export default {
   setup(props) {
     const { error, document: playlist } = getDocument("questions", props.qid);
     const { user } = getUser();
-    const { deleteDoc, updateDoc } = useDocument("questions", props.id);
+    const { deleteDoc, updateDoc } = useDocument("questions", props.qid);
     const { deleteImage } = useStorage();
     const router = useRouter();
 
@@ -117,6 +129,17 @@ export default {
         playlist.value && user.value && user.value.uid == playlist.value.userId
       );
     });
+    const alreadyLiked = computed(() => {
+      return playlist.value.views.includes(user.value.uid);
+    });
+
+    const handleLikes = async () => {
+      if (!alreadyLiked.value) {
+        await updateDoc({
+          views: [...playlist.value.views, user.value.uid],
+        });
+      }
+    };
 
     const handleDelete = async () => {
       await deleteDoc();
@@ -140,6 +163,8 @@ export default {
       handleDelete,
       handleClick,
       handleLinkDelete,
+      handleLikes,
+      alreadyLiked,
     };
   },
 };
@@ -227,5 +252,11 @@ li {
 }
 .example {
   padding-right: 25px;
+}
+.likes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 </style>
