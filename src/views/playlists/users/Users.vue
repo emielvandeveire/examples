@@ -1,6 +1,6 @@
 <template>
   <div class="page-link-container">
-    <router-link :to="{name: 'Home'}" class="page-link">
+    <router-link :to="{ name: 'Home' }" class="page-link">
       Videos
     </router-link>
     <router-link :to="{ name: 'PostPlaylists' }" class="page-link"
@@ -17,26 +17,48 @@
     </div>
   </div>
   <h2 class="h2-border">Users</h2>
-  <div v-for="userdetail in users" :key="userdetail.userId">
-    <router-link
-      :to="{ name: 'UserDetails', params: { userId: userdetail.userId } }"
-      class="single"
-    >
-      <div class="info">
-        <h1>{{ userdetail.userName }}</h1>
-        <p>{{ userdetail.email }}</p>
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'Chat', params: { toUser: userdetail.userId }}">message</router-link>
-  </div>
+  <input type="text" placeholder="Search..." v-model="searchQuery" />
+  <UserView :playlists="searchedUsers" />
 </template>
 
 <script>
-import getCollection from "@/composables/getCollection";
+import firebase from "firebase";
+import UserView from "@/components/UserView";
+import { computed, onMounted, reactive, ref } from "vue";
 export default {
   setup() {
-    const { documents: users } = getCollection("users");
-    return { users };
+    const users = reactive([]);
+    const searchQuery = ref("");
+    
+    const searchedUsers = computed(() => {
+      return users.filter((product) => {
+        return (
+          product.email
+            .toLowerCase()
+            .indexOf(searchQuery.value.toLowerCase()) != -1
+        );
+      });
+    });
+    onMounted(async () => {
+      try {
+        const productsSnap = await firebase
+          .firestore()
+          .collection("users")
+          .get();
+        productsSnap.forEach((doc) => {
+          let product = doc.data();
+          product.id = doc.id;
+          users.push(product);
+        });
+      } catch (e) {
+        console.log("Error Loading Products");
+      }
+    });
+
+    return { searchedUsers, searchQuery };
+  },
+  components: {
+    UserView,
   },
 };
 </script>
