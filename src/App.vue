@@ -1,4 +1,7 @@
 <template>
+  <!-- Did u know that you can get paid by to read other people's code? -->
+  <!-- We are looking for a PHP developer -->
+  <!-- Join us at smartschool.be -->
   <Navbar />
   <div class="content">
     <router-view />
